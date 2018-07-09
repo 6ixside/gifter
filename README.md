@@ -5,16 +5,19 @@ gifter dapp built on blockmason credit protocol
 # Installation
 
 this should be fairly straightforward as im sure you guys have installed dependencies for an angular application before
-basically after you pull the repo just run npm install
-running application -> ng serve or npm start
+
+1. basically after you pull the repo just run npm install
+2. running application -> ng serve or npm start
+
 to test in chrome extension
-ng build
-navigate to /dist/gifter
-copy the v2.png and manifest.json pinned in the slack group to this directory
-go to google chrome -> settings -> more tools -> extensions
-click load unpacked
-choose the /dist/gifter directory 
-if there are any issues im sure you smart people can figure it out
+
+3. ng build
+4. navigate to /dist/gifter
+5. copy the v2.png and manifest.json pinned in the slack group to this directory
+6. go to google chrome -> settings -> more tools -> extensions
+7. click load unpacked
+8. choose the /dist/gifter directory 
+9. if there are any issues im sure you smart people can figure it out
 
 if everything works you should see the logo in the top with the other extensions
 
