@@ -1,3 +1,36 @@
-<p>
-  create-account works!
-</p>
+<div class = "create-account_container">
+    <div class="img_container">
+        <img src="assets/v2.png" width="50%" height="50%" />
+      </div>
+<mat-card class = "profile_card">
+  <mat-card-header>
+    <img mat-card-avatar>
+    <mat-card-title>Gifter Profile</mat-card-title>
+    <mat-card-subtitle>Add New Image</mat-card-subtitle>
+  </mat-card-header>
+
+    <mat-form-field class = "account_email">
+      <input matInput [(ngModel)] = "email" placeholder = "Email">
+      </mat-form-field>
+
+      <mat-form-field class = "account_username">
+        <input matInput [(ngModel)] = "username" placeholder = "Username">
+      </mat-form-field>
+
+      <mat-form-field class = "account_password">
+        <input matInput [(ngModel)] = "password" type = "password" placeholder = "Password">
+      </mat-form-field>
+
+      <br> <br> <br>
+
+      <mat-card-actions>
+        <button mat-stroked-button class = "cancel_button" color = "primary">
+          Cancel
+        </button>
+
+        <button mat-stroked-button class = "create-account_button" color = "primary">
+          Create
+        </button>
+    </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,37 @@
+.profile_card{
+    background-color : #FFA500;
+    width : 100%;
+}
+
+.create-account_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+}
+
+.create-account_button {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    margin-top : 10px;
+}
+
+.cancel_button {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    margin-top : 10px;
+}
+
+.account_username{
+    width : 100%
+}
+
+.account_password{
+    width : 100%
+}
+
+.account_email{
+    width : 100%
+}
