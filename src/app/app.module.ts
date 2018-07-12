@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { TabNavComponent } from './tab-nav/tab-nav.component';
+import { FriendBarComponent } from './friend-bar/friend-bar.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TabNavComponent } from './tab-nav/tab-nav.component';
     LoginComponent,
     HomeComponent,
     HeaderComponent,
-    TabNavComponent
+    TabNavComponent,
+    FriendBarComponent
   ],
   imports: [
     BrowserModule,
