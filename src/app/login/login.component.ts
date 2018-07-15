@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -30,5 +30,6 @@ export class LoginComponent implements OnInit {
     console.log(password);
 
   }
+
 
 }
