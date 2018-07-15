@@ -1,13 +1,18 @@
 <div class = "create-account_container">
   <a class = "account_text">Create Your Gifter Account</a>
-  <br> <br>
-<mat-card class = "profile_card">
-  <mat-card-header>
-    <img mat-card-avatar src="assets/v2.png">
-    <mat-card-title>Gifter Profile</mat-card-title>
-  </mat-card-header>
+
+  <br> 
 
   <br>
+
+  <mat-card class = "profile_card">
+    <mat-card-header>
+      <img mat-card-avatar src="assets/v2.png">
+      <mat-card-title>Gifter Profile</mat-card-title>
+    </mat-card-header>
+
+    <br>
+
     <mat-form-field class = "account_email">
       <input matInput [(ngModel)] = "email" placeholder = "Email">
       </mat-form-field>
@@ -23,11 +28,11 @@
       <br> <br>
 
       <mat-card-actions class = "button_container">
-        <button mat-stroked-button class = "cancel_button" color = "accent">
+        <button mat-stroked-button class = "cancel_button" color = "accent" (click)="this.router.navigate(['/login'])">
           Cancel
         </button>
 
-        <button mat-stroked-button class = "create-account_button" color = "accent">
+        <button mat-stroked-button class = "create-account_button" color = "accent" (click)="createAccount()">
           Create
         </button>
     </mat-card-actions>
