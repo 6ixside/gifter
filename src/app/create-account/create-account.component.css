@@ -1,6 +1,7 @@
 .profile_card{
     background-color : #FFA500;
     width : 85%;
+    margin-left: 2%;
 }
 
 .create-account_container {
@@ -8,13 +9,16 @@
     flex-direction: column;
     justify-content: center;
     position: fixed;
-    top : 25%;
-    height : 200px;
+    height : 600px;
+    width : 300px;
+    top : 0%;
+    right : 0%;
+    background-color : #00e2e2;
 }
 
 .account_text {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
+    font-size: 20px;
     text-align : center;
 }
 
@@ -46,4 +50,20 @@
 
 .account_email{
     width : 100%;
+}
+
+.top_divider {
+    display : block;
+    margin-bottom : 80px;
+    width : 100%;
+    background-color : #FFA500;
+    height : 20px;
+}
+
+.bottom_divider {
+    display : block;
+    margin-top : 80px;
+    width : 100%;
+    background-color : #FFA500;
+    height : 20px;
 }
