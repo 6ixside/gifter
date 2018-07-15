@@ -1,6 +1,6 @@
 .profile_card{
     background-color : #FFA500;
-    width : 100%;
+    width : 85%;
 }
 
 .create-account_container {
@@ -9,14 +9,13 @@
     justify-content: center;
     position: fixed;
     top : 25%;
-    left : 30%;
     height : 200px;
 }
 
 .account_text {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px;
-    padding-left: 140px;
+    font-size: 25px;
+    text-align : center;
 }
 
 .create-account_button {
@@ -29,8 +28,8 @@
 .cancel_button {
     position: absolute;
     bottom: 0;
-    margin-left: 20%;
     color : black;
+    margin-left: 2%;
 }
 
 .button_container {
