@@ -12,10 +12,10 @@ export class LoginComponent implements OnInit {
   @Input() password: String;
 
   constructor(public as: AccountService, public router: Router){
-
+    
   }
 
-  ngOnInit() {
+  ngOnInit(){
 
   }
 
