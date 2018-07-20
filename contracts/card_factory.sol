@@ -1,6 +1,5 @@
 pragma solidity ^0.4.19;
 
-import "./safemath.sol";
 import "./ownable.sol";
 
 contract CardFactory is Ownable {
@@ -15,7 +14,7 @@ contract CardFactory is Ownable {
     Card[] public cards;
 
     mapping (uint => address) public cardToOwner;
-    mapping (address => uint) ownerCardCount;  
+    mapping (address => uint) ownerCardCount;
 
     function createCard(string company, uint16 balance) public onlyOwner {
         uint id = cards.push(Card(company, balance));
