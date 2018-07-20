@@ -26,7 +26,7 @@ export class CreateAccountComponent implements OnInit {
   	console.log(this.username);
   	console.log(this.password);
 
-  	this.as.createAccount(this.password);
+  	this.as.createAccount(this.email, this.username, this.password);
   }
 
 }

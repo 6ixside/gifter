@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   @Input() password: String;
 
   constructor(public as: AccountService, public router: Router){
-    
+
   }
 
   ngOnInit(){
@@ -29,7 +29,11 @@ export class LoginComponent implements OnInit {
     let username = this.username;
     let password = this.password;
 
-    this.as.login(username, password);
+    this.as.login(password).then((data) => {
+      this.router.navigate(['/home']);
+    }, (err) => {
+      console.log(err);
+    });
   }
 
 
