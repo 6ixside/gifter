@@ -29,6 +29,7 @@
     "extensionizer": "^1.0.1",
     "hammerjs": "^2.0.8",
     "rxjs": "^6.0.0",
+    "solc": "^0.4.24",
     "web3": "^1.0.0-beta.34",
     "zone.js": "^0.8.26"
   },

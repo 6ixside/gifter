@@ -9,6 +9,7 @@ contract CardFactory is Ownable {
     struct Card {
         string company;
         uint16 balance;
+        bool canTrade;
     }
 
     Card[] public cards;

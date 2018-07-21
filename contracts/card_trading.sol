@@ -20,10 +20,13 @@ contract CardTrading is CardFactory {
     }
 
     function getInventory(address _owner) public view returns (uint[]) {
-      uint[] memory result = new uint[]();
+      uint[] memory result = new uint[](ownerCardCount[_owner]);
+
+      uint c = 0;
       for (uint i = 0; i < cards.length; i++) {
         if (cardToOwner[i] == _owner) {
-          result.push(i);
+          result[c] = i;
+          c++;
         }
       }
       return result;
@@ -46,6 +49,8 @@ contract CardTrading is CardFactory {
 
     function _transfer(address _from, address _to, uint256 _cardId) private {
           cardToOwner[_cardId] = _to;
+          ownerCardCount[_from]--;
+          ownerCardCount[_from]++;
           emit Transfer(_from, _to, _cardId);
     }
 }

@@ -1,5 +1,7 @@
 pragma solidity ^0.4.24;
 
+import "./card_factory.sol";
+
 contract GifterUCACS{
 	/*
 	* @title: allowtrade
@@ -10,12 +12,19 @@ contract GifterUCACS{
 	* @params: partyB second party in the transaction
 	* @return: boolean determines if the transaction is allowed
 	*/
-	function allowTrade(address partyA, address partyB, ..params) public returns bool{
-		//read gifter profiles from both addresses
+	function allowTrade(address partyA, address partyB, uint cardIdA, uint cardIdB) public returns bool{
+		//check that card a belongs to party a,
+		//card b belongs to party b,
+		//and the retailer that created the giftcard has indicated
+		//that the giftcards can be traded (for both cards)
+		if(cardToOwner[cardIdA] != partyA || 
+		   cardToOwner[cardIdB] != partyB ||
+		   !cards[cardIdA].canTrade ||
+		   !cards[cardIdB].canTrade){
+			return false;
+		}
 
-		//check the giftcards from both parties is marked as tradeable 
-
-		//return
+		return true;
 	}
 
 	/*
