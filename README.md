@@ -1,6 +1,18 @@
+# Blockmason Credit Protocol Hackathon Submission
+
+To whom it may concern: This repository branch serves as our submission to the blockmason credit protocol hackathon. This repository as a whole is a in-progress project that the 6Side team is building to facilitate gift card related workflows via the ethereum blockchain and blockmason credit protocol.
+
+This readme will cover technologies used, use case authority functionalities (both developed and future implementations), and installation process of the current build.
+
 # Gifter
 
-gifter dapp built on blockmason credit protocol
+The Gifter application is a google chrome extension that will allow users to trade giftcards with their peers, purchase giftcards from certain retailers, redeem gift cards in their inventory, as well as serve many other functionalities. The extension is built using Angular (version 6.0.8) for a front-end tool, and is using the ethereum blockchain as a datastore. To communicate between the ethereum blockchain and angular front end, the web3js (version 1.0.0-beta34) library is being used. Other third party components include the metamask keyring controller which allows users to create a gifter account and automatically vault their private key only within the scope of their local storage allowing secure, ease of access to the gifter application.
+
+# Use Cases
+
+The current use case authority contract only has one enabled function which facilitates the trading of gift cards. This function is well documented in the GifterUCACs.sol file.
+
+Other planned use cases authority functionalities planned for implementation are functions that facilitate redeeming gift cards, purchasing gift cards, and posting marketplace listings for giftcards
 
 # Installation
 
@@ -13,13 +25,15 @@ to test in chrome extension
 
 3. ng build
 4. navigate to /dist/gifter
-5. copy the v2.png and manifest.json pinned in the slack group to this directory
+5. copy the v2.png and manifest.json located in the /after_build/ directory to the /dist/gifter/ directory
 6. go to google chrome -> settings -> more tools -> extensions
 7. click load unpacked
-8. choose the /dist/gifter directory 
+8. choose the /dist/gifter/ directory 
 9. if there are any issues im sure you smart people can figure it out
 
-if everything works you should see the logo in the top with the other extensions
+if everything works you should see the 6Side logo in the top right along with your other extensions
+
+please don't hesitate to reach out to hunterls@my.yorku.ca for assistance with installation
 
 # Gifter
 
