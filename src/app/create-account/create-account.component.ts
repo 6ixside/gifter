@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router'; 
+import { AccountService } from './../shared/services/account.service';
 
 @Component({
   selector: 'app-create-account',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateAccountComponent implements OnInit {
 
-  constructor() { }
+	public email: String;
+	public username: String;
+	public password: String;
+
+  constructor(public as: AccountService, public router: Router){
+
+  }
 
   ngOnInit() {
+
+  }
+
+  createAccount(){
+  	console.log(this.email);
+  	console.log(this.username);
+  	console.log(this.password);
+
+  	this.as.createAccount(this.password);
   }
 
 }
