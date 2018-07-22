@@ -9,6 +9,7 @@ contract CardFactory is Ownable {
     struct Card {
         string company;
         uint16 balance;
+        bool canTrade;
     }
 
     Card[] public cards;
@@ -17,7 +18,7 @@ contract CardFactory is Ownable {
     mapping (address => uint) ownerCardCount;
 
     function createCard(string company, uint16 balance) public onlyOwner {
-        uint id = cards.push(Card(company, balance));
+        uint id = cards.push(Card(company, balance, true));
         cardToOwner[id] = msg.sender;
         ownerCardCount[msg.sender]++;
         emit NewCard(id, company, balance);

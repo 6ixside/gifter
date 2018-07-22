@@ -48,6 +48,8 @@ contract CardTrading is CardFactory {
 
     function _transfer(address _from, address _to, uint256 _cardId) private {
           cardToOwner[_cardId] = _to;
+          ownerCardCount[_from]--;
+          ownerCardCount[_from]++;
           emit Transfer(_from, _to, _cardId);
     }
 }

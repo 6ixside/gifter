@@ -20,6 +20,13 @@ export class AccountService {
 	public accounts: Object;//BehaviorSubject<Object> = new BehaviorSubject<Object>({});
 	public keyringState: any;
 
+	//create an observable that is the state so we can listen to changes
+	public accountState: Object = {
+		USER: new BehaviorSubject<String>(null),
+		EMAIL: new BehaviorSubject<String>(null),
+		KEY: new BehaviorSubject<Object>(null)
+	};
+
   constructor(){
   	/*On Instantiation, load the last state of the extension
   	and then instantiate the keyring controller with the
@@ -35,33 +42,52 @@ export class AccountService {
   }
 
   /*Account creation only needs password, this needs to return a public key*/
-  public async createAccount(key){
+  public async createAccount(email, username, password){
   	//creates a new keyring
-  	this.keyring = await this.keyringController.createNewVaultAndKeychain(key);
+  	this.keyring = await this.keyringController.createNewVaultAndKeychain(password);
   	//gets the new state of the keyring
   	this.keyringState = this.keyringController.store.getState();
   	//sets the state of the keyring in storage to be the latest
   	this.setState(this.keyringState).then((data) => {
+  		this.accountState['KEY'].next(this.keyringState);
   		console.log('successfully wrote state');
   		console.log(this.keyringState);
+  	}, (err) => {console.log(err)});
+
+  	this.setState({'USER': username}).then((data) => {
+  		this.accountState['USER'].next(username);
+  	}, (err) => {console.log(err)});
+
+  	this.setState({'EMAIL': email}).then((data) => {
+  		this.accountState['EMAIL'].next(email);
   	}, (err) => {console.log(err)});
   }
 
   /*Login only needs to verify the password that should be stored in local storage
   TODO: backup login information on disk in case local storage is lost for some reason
   TODO: implement functionality to regenerate vault from mnoemic if both local and disk storage is unavailable*/
-  public async login(pubKey, priKey){
+  public login(password){
   	//sets the keyrings to the set of all keyrings after unlock (for us should only be cardinality 1)
-  	this.keyring = await this.keyringController.unlockKeyrings(priKey);
-  	//get the unlocked accounts
-  	this.accounts = await this.keyringController.getAccounts();
-  	this.keyringState = this.keyringController.store.getState();
-  	this.keyringController.fullUpdate();
+  	return new Promise((resolve, reject) => {
+  		this.keyring = this.keyringController.unlockKeyrings(password).then((data) => {
+	  		//get the unlocked accounts
+		  	this.accounts = this.keyringController.getAccounts();
+		  	this.keyringState = this.keyringController.store.getState();
+		  	this.keyringController.fullUpdate();
 
-  	this.setState(this.keyringState).then((data) => {
-  		console.log('successfully wrote state');
-  		console.log(this.keyringState);
-  	}, (err) => {console.log(err)});
+		  	this.setState(this.keyringState).then((data) => {
+		  		this.accountState['KEY'].next(this.keyringState);
+		  		console.log('successfully wrote state');
+		  		console.log(this.keyringState);
+		  	}, (err) => {console.log(err)});
+
+		  	resolve();
+	  	}, (err) => {
+	  		console.log(err);
+	  		reject(err);
+	  		//do something here to notify user of login issue
+	  	});
+  	});
   }
 
   /*Loads the last state from local storage, if local storage doesn't exist, assume undefined last state*/
@@ -80,12 +106,14 @@ export class AccountService {
 		        reject(this.extension.runtime.lastError);
 		      } 
 		      else
+		      	//result contains the vault object that holds the users's credentials
 		        resolve(result);
 		    });
 		  }
   	});
   }
 
+  //sets information pertaining to the user's account
   public setState(state){
   	let localStorage = this.extension.storage.local;
 
@@ -95,8 +123,9 @@ export class AccountService {
         	console.log(this.extension.runtime.lastError);
           reject(this.extension.runtime.lastError);
         } 
-        else
+        else{
           resolve();
+        }
       });
     });
   }
