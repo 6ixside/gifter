@@ -4,6 +4,7 @@ import Web3 from 'web3';
 import KeyringController from 'eth-keyring-controller';
 import SimpleKeyring from 'eth-simple-keyring';
 import Extension from 'extensionizer';
+import EthereumTx from 'ethereumjs-tx'
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AccountService {
 	public keyring: any;
 	public accounts: Object;//BehaviorSubject<Object> = new BehaviorSubject<Object>({});
 	public keyringState: any;
+	public key: String;
 
 	//create an observable that is the state so we can listen to changes
 	public accountState: Object = {
@@ -36,6 +38,8 @@ export class AccountService {
 				keyringTypes: [SimpleKeyring],
 				initState: data 
 			});
+
+			this.keyringController.signTransaction.bind(this.keyringController);
 
 			console.log(data);
   	}, (err) => {console.log(err);});
@@ -71,7 +75,11 @@ export class AccountService {
   	return new Promise((resolve, reject) => {
   		this.keyring = this.keyringController.unlockKeyrings(password).then((data) => {
 	  		//get the unlocked accounts
-		  	this.accounts = this.keyringController.getAccounts();
+		  	this.keyringController.getAccounts().then(data => {
+		  		this.accounts = data;
+		  		console.log(data);
+		  	});
+
 		  	this.keyringState = this.keyringController.store.getState();
 		  	this.keyringController.fullUpdate();
 
@@ -128,5 +136,13 @@ export class AccountService {
         }
       });
     });
+  }
+
+  public createTransactionObject(trx){
+  	return new EthereumTx(trx);
+  }
+
+  public signTransaction(trx){
+  	return this.keyringController.signTransaction(trx, this.accounts[0]);
   }
 }

@@ -16,6 +16,7 @@ import { TabNavComponent } from './tab-nav/tab-nav.component';
 import { FriendBarComponent } from './friend-bar/friend-bar.component';
 
 import { AccountService } from './shared/services/account.service';
+import { CardService } from './shared/services/card.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AccountService } from './shared/services/account.service';
     MaterialSharedModule,
     BrowserAnimationsModule
   ],
-  providers: [AccountService],
+  providers: [AccountService,
+              CardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
