@@ -20,10 +20,12 @@ contract CardTrading is CardFactory {
     }
 
     function getInventory(address _owner) public view returns (uint[]) {
-      uint[] memory result = new uint[]();
+      uint[] memory result = new uint[](ownerCardCount[_owner]);
+      uint counter = 0;
       for (uint i = 0; i < cards.length; i++) {
         if (cardToOwner[i] == _owner) {
-          result.push(i);
+          result[counter] = i;
+          counter++;
         }
       }
       return result;

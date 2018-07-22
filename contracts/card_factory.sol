@@ -4,7 +4,7 @@ import "./ownable.sol";
 
 contract CardFactory is Ownable {
 
-    event NewCard(uint cardId, string company, uint dna);
+    event NewCard(uint indexed cardId, string indexed company, uint indexed dna);
 
     struct Card {
         string company;
@@ -19,6 +19,7 @@ contract CardFactory is Ownable {
     function createCard(string company, uint16 balance) public onlyOwner {
         uint id = cards.push(Card(company, balance));
         cardToOwner[id] = msg.sender;
+        ownerCardCount[msg.sender]++;
         emit NewCard(id, company, balance);
     }
 }
