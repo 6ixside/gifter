@@ -4,7 +4,7 @@ const Web3 = require("web3");
 const solc = require("solc"); 
 const net = require("net");
 
-contractFile = "./" + process.argv[2];
+contractFile = "./contracts/" + process.argv[2];
 
 const contractInput = fs.readFileSync(contractFile); //contract file
 const contractOutput = solc.compile(contractInput.toString(), 1); //use solc to compile the file
