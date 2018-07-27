@@ -1,5 +1,4 @@
 <div class = "create-account_container">
-  <div class = "top_divider"></div>
   <a class = "account_text">Create Your Gifter Account</a>
 
   <br>
@@ -23,9 +22,35 @@
         <input matInput [(ngModel)] = "password" type = "password" placeholder = "Password">
       </mat-form-field>
 
-      <mat-form-field class = "account_password">
-        <input matInput [(ngModel)] = "password" type = "password" placeholder = "Confirm Password">
+      <mat-form-field class = "account_confirm_password">
+        <input matInput [(ngModel)] = "confirmPassword" type = "password" placeholder = "Confirm Password">
       </mat-form-field>
+
+      <ng-container *ngIf = "!confirmPassword || !password; else second"> 
+        <div class = "emptyForm">
+          <i class="material-icons md-18">clear</i>
+          &nbsp;
+          <a>Password and/or confirmation empty!</a>
+        </div>
+      </ng-container>
+
+      <ng-template #second>
+        <ng-container *ngIf = "confirmPassword != password; else third">
+          <div class = "nonMatchingForm">
+            <i class="material-icons md-18">clear</i>
+            &nbsp;
+            <a>Passwords do not match!</a>
+          </div>
+        </ng-container>
+      </ng-template>
+
+      <ng-template #third>
+          <div class = "matchingForm">
+            <i class="material-icons md-18">check</i>
+            &nbsp;
+            <a>Passwords match!</a>
+          </div>
+      </ng-template>
 
       <br> <br>
 
@@ -39,5 +64,4 @@
         </button>
     </mat-card-actions>
     </mat-card>
-    <div class = "bottom_divider"></div>
 </div>

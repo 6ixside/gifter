@@ -30,9 +30,10 @@
     "ethereumjs-util": "^5.2.0",
     "extensionizer": "^1.0.1",
     "hammerjs": "^2.0.8",
+    "material-design-icons": "^3.0.1",
     "rxjs": "^6.0.0",
     "solc": "^0.4.24",
-    "web3": "^1.0.0-beta.34",
+    "web3": "^1.0.0-beta.35",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
