@@ -25,4 +25,9 @@ export class CreateAccountComponent implements OnInit {
   	  this.as.createAccount(this.email, this.username, this.password);
   }
 
+  disableCreate(disabled : boolean){
+    var button = <HTMLInputElement> document.getElementById("create-account_button");
+    button.disabled = disabled;
+  }
+
 }
