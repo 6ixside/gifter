@@ -2,10 +2,7 @@
   <div class = "top_divider"></div>
   <a class = "account_text">Create Your Gifter Account</a>
 
-  <br> 
-
   <br>
-
   <mat-card class = "profile_card">
     <mat-card-header>
       <img mat-card-avatar src="assets/v2.png">
@@ -26,14 +23,18 @@
         <input matInput [(ngModel)] = "password" type = "password" placeholder = "Password">
       </mat-form-field>
 
+      <mat-form-field class = "account_password">
+        <input matInput [(ngModel)] = "password" type = "password" placeholder = "Confirm Password">
+      </mat-form-field>
+
       <br> <br>
 
       <mat-card-actions class = "button_container">
-        <button mat-stroked-button class = "cancel_button" color = "accent" (click)="this.router.navigate(['/login'])">
+        <button mat-stroked-button class = "cancel_button" color = "warn" (click)="this.router.navigate(['/login'])">
           Cancel
         </button>
 
-        <button mat-stroked-button class = "create-account_button" color = "accent" (click)="createAccount()">
+        <button mat-stroked-button class = "create-account_button" color = "primary" (click)="createAccount()">
           Create
         </button>
     </mat-card-actions>
