@@ -64,7 +64,9 @@ export class AccountService {
 
   	this.setState({'EMAIL': email}).then((data) => {
   		this.accountState['EMAIL'].next(email);
-  	}, (err) => {console.log(err)});
+		}, (err) => {console.log(err)});
+		
+		this.generateMnemonic();
   }
 
   /*Login only needs to verify the password that should be stored in local storage
@@ -144,5 +146,15 @@ export class AccountService {
 
   public signTransaction(trx){
   	return this.keyringController.signTransaction(trx, this.accounts[0]);
-  }
-}
+	}
+	
+	public async generateMnemonic(){
+		var keyring = this.keyringController.getKeyringsByType('HD Key Tree')[0];
+		if(!keyring)
+			console.log("Couldn't find an HD key tree");
+		
+		var serializedKeyring = await keyring.serialize();
+		var mnemonic = serializedKeyring.mnemonic; //mnemonic based on the current keyring
+		 
+		}
+	}
