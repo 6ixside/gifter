@@ -4,7 +4,8 @@ import Web3 from 'web3';
 import KeyringController from 'eth-keyring-controller';
 import SimpleKeyring from 'eth-simple-keyring';
 import Extension from 'extensionizer';
-import EthereumTx from 'ethereumjs-tx'
+import EthereumTx from 'ethereumjs-tx';
+import ObservableStore from 'obs-store';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import EthereumTx from 'ethereumjs-tx'
 export class AccountService {
 	/*i like lowercase*/
 	public extension = Extension;
+	public store = new ObservableStore();
 
 	/*sets the provider to the infura rinkeby node*/
 	public web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/"));
@@ -54,8 +56,6 @@ export class AccountService {
   	//sets the state of the keyring in storage to be the latest
   	this.setState(this.keyringState).then((data) => {
   		this.accountState['KEY'].next(this.keyringState);
-  		console.log('successfully wrote state');
-  		console.log(this.keyringState);
   	}, (err) => {console.log(err)});
 
   	this.setState({'USER': username}).then((data) => {
@@ -79,7 +79,7 @@ export class AccountService {
 	  		//get the unlocked accounts
 		  	this.keyringController.getAccounts().then(data => {
 		  		this.accounts = data;
-		  		console.log(data);
+		  		console.log("The data is: " + data);
 		  	});
 
 		  	this.keyringState = this.keyringController.store.getState();
@@ -87,8 +87,6 @@ export class AccountService {
 
 		  	this.setState(this.keyringState).then((data) => {
 		  		this.accountState['KEY'].next(this.keyringState);
-		  		console.log('successfully wrote state');
-		  		console.log(this.keyringState);
 		  	}, (err) => {console.log(err)});
 
 		  	resolve();
@@ -147,6 +145,14 @@ export class AccountService {
   public signTransaction(trx){
   	return this.keyringController.signTransaction(trx, this.accounts[0]);
 	}
+
+	public setData(data){
+		this.store.putState(data);
+	}
+
+	public getData(){
+		return this.store.getState();
+	}
 	
 	public async generateMnemonic(){
 		var keyring = this.keyringController.getKeyringsByType('HD Key Tree')[0];
@@ -155,6 +161,20 @@ export class AccountService {
 		
 		var serializedKeyring = await keyring.serialize();
 		var mnemonic = serializedKeyring.mnemonic; //mnemonic based on the current keyring
-		 
-		}
+
+		this.setMnemonic(mnemonic); 
 	}
+
+	//Can simply use a set and get now, will implement a clearing of the cache to avoid easy mnemonic retrieval
+	public setMnemonic(mnemonic){
+		var data = this.getData();
+		data.mnemonic = mnemonic;
+		this.setData(data);
+	}
+
+	public getMnemonic() {
+		var data = this.getData();
+		console.log("The mnemonic is: " + data.mnemonic);
+		return data.mnemonic;
+	}
+}
