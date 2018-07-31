@@ -17,6 +17,7 @@ import { FriendBarComponent } from './friend-bar/friend-bar.component';
 
 import { AccountService } from './shared/services/account.service';
 import { CardService } from './shared/services/card.service';
+import { CreateAccountModalComponent } from './create-account-modal/create-account-modal.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CardService } from './shared/services/card.service';
     HeaderComponent,
     TabNavComponent,
     FriendBarComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    CreateAccountModalComponent
   ],
   imports: [
     BrowserModule,
