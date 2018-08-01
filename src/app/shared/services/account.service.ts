@@ -162,7 +162,7 @@ export class AccountService {
 		var serializedKeyring = await keyring.serialize();
 		var mnemonic = serializedKeyring.mnemonic; //mnemonic based on the current keyring
 
-		this.setMnemonic(mnemonic); 
+		this.setMnemonic(mnemonic);
 	}
 
 	//Can simply use a set and get now, will implement a clearing of the cache to avoid easy mnemonic retrieval
@@ -174,7 +174,6 @@ export class AccountService {
 
 	public getMnemonic() {
 		var data = this.getData();
-		console.log("The mnemonic is: " + data.mnemonic);
 		return data.mnemonic;
 	}
 }

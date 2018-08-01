@@ -40,6 +40,7 @@ import { CreateAccountModalComponent } from './create-account-modal/create-accou
   ],
   providers: [AccountService,
               CardService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CreateAccountModalComponent]
 })
 export class AppModule { }

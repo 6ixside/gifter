@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateAccountModalComponent } from './create-account-modal.component';
 
 describe('CreateAccountModalComponent', () => {

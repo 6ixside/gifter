@@ -1,3 +1,8 @@
-<p>
-  create-account-modal works!
-</p>
+<div class = "create_account_modal">
+  <a>Account Created!</a>
+  <br> <br>
+  <a>Please write down the following seed word phrase in a safe place for your account:</a>
+    <button mat-stroked-button class = "ok_button" [mat-dialog-close] color = "primary" (click)="this.router.navigate(['/home'])">
+      OK
+    </button>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material';
+import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 @Component({
   selector: 'app-create-account-modal',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateAccountModalComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
+  }
+
+  route() {
+    
   }
 
 }
