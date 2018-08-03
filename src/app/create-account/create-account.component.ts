@@ -18,33 +18,30 @@ export class CreateAccountComponent implements OnInit {
   mnemonic: String;
 
   constructor(public as: AccountService, public router: Router, public dialog: MatDialog){
-
   }
 
   ngOnInit() {
   }
 
+  openDialog(){
+    this.mnemonic = this.as.getMnemonic();
+    const modal = this.dialog.open(CreateAccountModalComponent, {
+        width : '200px',
+        data: {mnemonic : this.mnemonic}
+    });
+    this.as.setMnemonic(null); //clear cache for security purposes
+
+    modal.afterClosed().subscribe(result => {
+        console.log("Dialog was closed!");
+    });
+}
+
   createAccount(){
-      this.as.createAccount(this.email, this.username, this.password);
-      this.mnemonic = this.as.getMnemonic();
-      console.log(this.mnemonic);
-      this.openDialog();
+      this.as.createAccount(this.email, this.username, this.password).then(() => this.openDialog());
   }
 
   disableCreate(disabled : boolean){
     var button = <HTMLInputElement> document.getElementById("create-account_button");
     button.disabled = disabled;
   }
-
-  openDialog(){
-      const modal = this.dialog.open(CreateAccountModalComponent, {
-          width : '200px',
-          data: {mnemonic : this.mnemonic}
-      });
-
-      modal.afterClosed().subscribe(result => {
-          console.log("Dialog was closed!");
-      });
-  }
-
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MAT_DIALOG_DATA} from '@angular/material';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 @Component({
@@ -9,13 +9,8 @@ import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 })
 export class CreateAccountModalComponent implements OnInit {
 
-  constructor(public router: Router) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public router: Router) { }
 
   ngOnInit() {
   }
-
-  route() {
-    
-  }
-
 }

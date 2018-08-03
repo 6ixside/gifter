@@ -66,7 +66,7 @@ export class AccountService {
   		this.accountState['EMAIL'].next(email);
 		}, (err) => {console.log(err)});
 		
-		this.generateMnemonic();
+		await this.generateMnemonic();
   }
 
   /*Login only needs to verify the password that should be stored in local storage
@@ -165,7 +165,6 @@ export class AccountService {
 		this.setMnemonic(mnemonic);
 	}
 
-	//Can simply use a set and get now, will implement a clearing of the cache to avoid easy mnemonic retrieval
 	public setMnemonic(mnemonic){
 		var data = this.getData();
 		data.mnemonic = mnemonic;
