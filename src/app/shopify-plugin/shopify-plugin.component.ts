@@ -1,4 +1,6 @@
+
 import { Component, OnInit } from '@angular/core';
+import { ShopifyService } from '../shared/services/shopify.service';
 
 @Component({
   selector: 'app-shopify-plugin',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopifyPluginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public shopifyService: ShopifyService) { }
 
   ngOnInit() {
+  }
+
+  search(){
+    this.shopifyService.search();
   }
 
 }

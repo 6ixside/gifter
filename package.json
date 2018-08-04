@@ -33,6 +33,7 @@
     "material-design-icons": "^3.0.1",
     "obs-store": "^3.0.0",
     "rxjs": "^6.0.0",
+    "shopify-buy": "^1.7.0",
     "solc": "^0.4.24",
     "web3": "^1.0.0-beta.35",
     "zone.js": "^0.8.26"
