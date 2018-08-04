@@ -7,8 +7,8 @@ import { CreateAccountComponent } from './create-account/create-account.componen
 
 const routes: Routes = [
 	{path: '', redirectTo: '/login', pathMatch: 'full'},
-  	{path: 'login', component: LoginComponent},
-  	{path: 'create-account', component: CreateAccountComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'create-account', component: CreateAccountComponent},
 	{path: 'home', component: HomeComponent}
 ];
 
