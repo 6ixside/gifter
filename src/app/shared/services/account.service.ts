@@ -143,6 +143,7 @@ export class AccountService {
   }
 
   public signTransaction(trx){
+  	console.log('signing with: ' + this.accounts[0]);
   	return this.keyringController.signTransaction(trx, this.accounts[0]);
   }
 }

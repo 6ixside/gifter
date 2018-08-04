@@ -17,10 +17,10 @@ for(c in compiled.contracts){
 			console.log("err is: " + err);
 	});
 
-	/*fs.writeFile(c.split('.sol')[0] + '.abi', compiled.contracts[c].interface, 'utf8', (err) => {
+	fs.writeFile(c.split('.sol')[0] + '.abi', compiled.contracts[c].interface, 'utf8', (err) => {
 		if(err)
 			console.log("err is: " + err);
-	});*/
+	});
 }
 
 //console.log(contractName + ': ' + output.contracts[contractName].bytecode)

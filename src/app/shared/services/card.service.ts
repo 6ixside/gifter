@@ -30,35 +30,53 @@ export class CardService {
   			this.cf_abi = res;
   			console.log(this.cf_abi);
 
-  			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x40c00b710Df95aaf05263828fDebcd0616754cc9');
+  			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0xf47cfaEA90Dc9e0d6487A75aB690A322b8f5A7e7');
   			console.log(this.cf_contract);
   		});
   	});
   }
 
-  public createCard(company, value){
+  public async createCard(company, value){
   	let method = this.cf_contract.methods.createCard(company, value);
   	let trx_encode = method.encodeABI();
+  	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
 
   	let trx = this.as.createTransactionObject({
-  		nonce: 11,
-  		from: this.as.accounts[0],
-  		to: '0x40c00b710Df95aaf05263828fDebcd0616754cc9',
-  		gas: 1000000,
-  		gasPrice: 20000000000 * 1.2,
+  		nonce: this.web3.utils.toHex(nonce),
+  		from: "0x746344ca8847996c3159b67f0aa85d1bea7c133c",
+  		to: '0xf47cfaEA90Dc9e0d6487A75aB690A322b8f5A7e7',
+  		gas: this.web3.utils.toHex(5000000),
+  		gasPrice: this.web3.utils.toHex(50000000000 * 1.5),
   		data: trx_encode
   	});
 
-  	let signedTrx = this.as.signTransaction(trx).then((data) => {
+  	this.as.signTransaction(trx).then((data) => {
+  		console.log('data');
+  		console.log(data);
+
   		var rawTrx = EthereumUtil.bufferToHex(data.serialize());
   		console.log(rawTrx);
 
-  		this.web3.eth.sendSignedTransaction(rawTrx, (err, res) => {
-  			if(err)
-  				console.log(err);
+			this.web3.eth.sendSignedTransaction(rawTrx, (err, res) => {
+				if(err)
+					console.log(err);
 
-  			console.log(res);
-  		});
-  	});
+				console.log(res);
+			}).on('transactionHash', function(hash){
+				    console.log('hash: ' + hash);
+				})
+				.on('receipt', function(receipt){
+				    console.log('receipt: ' + receipt);
+				})
+				.on('confirmation', function(confirmationNumber, receipt){
+					console.log('confirmation number: ' + confirmationNumber);
+				})
+				.on('error', console.error);
+	  });
+  }
+
+  //temporary function, need to build a nonce generating functionality
+  public getRandomNonce(){
+  	return Math.round(Math.random() * Number.MAX_SAFE_INTEGER);
   }
 }
