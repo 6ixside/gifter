@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from './../shared/services/account.service';
-import { CardService } from './../shared/services/card.service';
+import { AccountService } from '../shared/services/account.service';
+import { CardService } from '../shared/services/card.service';
 
 @Component({
   selector: 'gifter-tab-nav',
