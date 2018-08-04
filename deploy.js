@@ -4,7 +4,7 @@ const Web3 = require("web3");
 const solc = require("solc"); 
 const net = require("net");
 
-contractFile = "./" + process.argv[2];
+contractFile = "./contracts/" + process.argv[2];
 
 const contractInput = fs.readFileSync(contractFile); //contract file
 const contractOutput = solc.compile(contractInput.toString(), 1); //use solc to compile the file
@@ -40,10 +40,43 @@ web3.eth.getCoinbase().then(function(coinbase){
       gas: 4612388
     }, function(err, transactionHash) {})
     .on('error', function(err){console.log(err);})
-    .on('transactionHash', function(transactionHash){console.log("The transaction hash is: " + transactionHash);})
-    .on('receipt', function(receipt){if(receipt.contactAddress != null) console.log("The contact address is: " + receipt.contactAddress);})
-    .on('confirmation', function(confirmationNumber, receipt){console.log("The confirmation number is: " + confirmationNumber)})
-    .then(function (newContractInstance){
-      console.log(newContractInstance.options.address);
-    }); 
+    .on('transactionHash', function(transactionHash)
+    { 
+      console.log("The transaction hash is: " + transactionHash); 
+      console.log("Retrieving contract address...")
+    }) 
+    .on('receipt', function(receipt){
+      if(receipt.contractAddress != null) 
+      {
+        console.log("The contact address is: " + receipt.contractAddress);
+      }
+
+      var contractAddress = receipt.contractAddress;
+      var contract = {
+        "Contract Name" : contractName,
+        "Address" : contractAddress
+      }
+
+      var jsonContract = JSON.stringify(contract);
+        
+      if(!fs.existsSync("./contract.json"))
+      {
+        fs.writeFile("./contract.json", jsonContract, function(err) {
+          if(err)
+            console.log(err);
+          else
+            console.log("JSON file has been created and JSON object has been added!")
+        });
+      }
+
+      else
+      {
+        fs.appendFile("./contract.json", jsonContract, function(err) {
+            if(err)
+              console.log(err);
+            else
+              console.log("JSON file has been appended with contract name and address!");
+        });
+      }
+    })
 });
