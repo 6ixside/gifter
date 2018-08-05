@@ -18,7 +18,6 @@ import { FriendBarComponent } from './friend-bar/friend-bar.component';
 import { AccountService } from './shared/services/account.service';
 import { CardService } from './shared/services/card.service';
 import { CreateAccountModalComponent } from './create-account-modal/create-account-modal.component';
-import { ShopifyPluginComponent } from './shopify-plugin/shopify-plugin.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import { ShopifyPluginComponent } from './shopify-plugin/shopify-plugin.componen
     TabNavComponent,
     FriendBarComponent,
     CreateAccountComponent,
-    CreateAccountModalComponent,
-    ShopifyPluginComponent
+    CreateAccountModalComponent
   ],
   imports: [
     BrowserModule,

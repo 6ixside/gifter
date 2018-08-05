@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {CreateAccountModalComponent} from '../create-account-modal/create-account-modal.component';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router'; 
-import { AccountService } from '../shared/services/account.service';
+import { AccountService } from './../shared/services/account.service';
 
 @Component({
   selector: 'app-create-account',

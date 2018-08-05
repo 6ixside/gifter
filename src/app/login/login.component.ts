@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
-import { AccountService } from '../shared/services/account.service'; 
+import { AccountService } from './../shared/services/account.service'; 
 
 @Component({
   selector: 'app-login',
