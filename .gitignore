@@ -38,6 +38,7 @@ testem.log
 package-lock.json
 *.bin
 *.abi
+.env
 
 # e2e
 /e2e/*.js
