@@ -21,7 +21,7 @@ app.get('/shopify', (req, res) => {
     if (shop) {
         const state = nonce();
         const redirectUri = forwardingAddress + '/shopify/callback';
-        const installUrl = "https://" + shop + "admin/ouath/authorize?client_id=" + apiKey +
+        const installUrl = "https://" + shop + "/admin/ouath/authorize?client_id=" + apiKey +
         "&scope=" + scopes + 
         "&state=" + state +
         "&redirect_uri=" + redirectUri;
@@ -69,7 +69,22 @@ app.get('/shopify/callback', (req, res) => {
             return res.status(400).send("Hmac validation failed.");
         }
 
-        res.status(200).send("Hmac validated.");
+        const accessTokenRequestUrl = "https://" + shop + "/admin/oauth/access_token";
+        const accessTokenPayload = {
+            client_id : apiKey,
+            client_secret : apiSecret,
+            code,
+        };
+
+        request.post(accessTokenRequestUrl, {json: accessTokenPayload})
+        .then((accessTokenResponse) => {
+            const accessToken = accessTokenResponse.access_token;
+
+            res.status(200).send("Got an access token let's do something with it");
+        })
+        .catch((error) => {
+            res.status(error.statusCode).send(error.error.error_description);
+        });
     }
 
     else {
