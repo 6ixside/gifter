@@ -47,7 +47,7 @@ app.get('/shopify/callback', (req, res) => {
         delete map["hmac"];
         const message = querystring.stringify(map);
         const providedHmac = Buffer.from(hmac, "utf-8");
-        const generateHash = Buffer.from(
+        const generatedHash = Buffer.from(
             crypto
             .createHmac("sha256", apiSecret)
             .update(message)
