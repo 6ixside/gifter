@@ -10,21 +10,17 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = "read_products";
-const forwardingAddress = "https://f15f4ca3.ngrok.io"; //will change once URL is available
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+const forwardingAddress = "https://5676eca4.ngrok.io"; //will change once URL is available
 
 app.get('/shopify', (req, res) => {
     const shop = req.query.shop;
     if (shop) {
         const state = nonce();
         const redirectUri = forwardingAddress + '/shopify/callback';
-        const installUrl = "https://" + shop + "/admin/ouath/authorize?client_id=" + apiKey +
-        "&scope=" + scopes + 
-        "&state=" + state +
-        "&redirect_uri=" + redirectUri;
+        const installUrl = 'https://' + shop + '/admin/oauth/authorize?client_id=' + apiKey +
+        '&scope=' + scopes + 
+        '&state=' + state +
+        '&redirect_uri=' + redirectUri;
 
         res.cookie('state', state);
         res.redirect(installUrl);
@@ -43,16 +39,16 @@ app.get('/shopify/callback', (req, res) => {
 
     if(shop && hmac && code) {
         const map = Object.assign({}, req.query);
-        delete map["signature"];
-        delete map["hmac"];
+        delete map['signature'];
+        delete map['hmac'];
         const message = querystring.stringify(map);
-        const providedHmac = Buffer.from(hmac, "utf-8");
+        const providedHmac = Buffer.from(hmac, 'utf-8');
         const generatedHash = Buffer.from(
             crypto
-            .createHmac("sha256", apiSecret)
+            .createHmac('sha256', apiSecret)
             .update(message)
-            .digest("hex"), 
-            "utf-8"
+            .digest('hex'), 
+            'utf-8'
         );
 
         let hashEquals = false;
