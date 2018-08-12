@@ -4,8 +4,10 @@ const app = express();
 const crypto = require('crypto');
 const cookie = require('cookie');
 const nonce = require('nonce')();
+const path = require('path');
 const querystring = require('querystring');
 const request = require('request-promise');
+const web3 = require('web3');
 
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
@@ -81,13 +83,7 @@ app.get('/shopify/callback', (req, res) => {
                 'X-Shopify-Access-Token': accessToken,
             };
 
-            request.get(shopRequestUrl, {headers: shopRequestHeaders})
-            .then((shopResponse) => {
-                res.end(shopResponse);
-            })
-            .catch((error) => {
-                res.status(error.statusCode).send(error.error.error_description);
-            });
+            res.sendFile(path.join(__dirname + '/index.html'));
         })
         .catch((error) => {
             res.status(error.statusCode).send(error.error.error_description);
