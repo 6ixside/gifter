@@ -1,0 +1,73 @@
+<div class = "create-account_container">
+  <div class="login_header">
+    <div class="logo_container">
+      <img src="assets/logo.png" />
+    </div>
+  </div>
+
+  <div class="create_info">
+    <p class="create_description">Account Sign-Up</p>
+
+    <div class="process_container">
+      <p class="create_description_2">Simple 3-step Process:</p>
+    </div>
+  </div>
+
+  <div class="form_container">
+    <mat-form-field class = "gifter_email_input">
+      <input matInput [(ngModel)] = "email">
+      <mat-placeholder class="placeholder">Enter Your Email</mat-placeholder>
+      <mat-icon matSuffix>mail</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class = "gifter_user_input">
+      <input matInput [(ngModel)] = "user">
+      <mat-placeholder class="placeholder">Choose a Username</mat-placeholder>
+      <mat-icon matSuffix>person</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class = "gifter_pw_input">
+      <input matInput [(ngModel)] = "password" type = "password">
+      <mat-placeholder class="placeholder">Type Your Password</mat-placeholder>
+      <mat-icon matSuffix>remove_red_eye</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class = "gifter_pw_input">
+      <input matInput [(ngModel)] = "confirmPassword" type = "password">
+      <mat-placeholder class="placeholder">Confirm Your Password</mat-placeholder>
+      <mat-icon matSuffix>remove_red_eye</mat-icon>
+    </mat-form-field>
+
+    <ng-container *ngIf = "!confirmPassword || !password; else second"> 
+      <div class = "emptyForm">
+        <i class="material-icons md-18">clear</i>
+        &nbsp;
+        <a>Password and/or confirmation empty!</a>
+      </div>
+      {{disableCreate(true)}}
+    </ng-container>
+
+    <ng-template #second>
+      <ng-container *ngIf = "confirmPassword != password; else third">
+        <div class = "nonMatchingForm">
+          <i class="material-icons md-18">clear</i>
+          &nbsp;
+          <a>Passwords do not match!</a>
+        </div>
+        {{disableCreate(true)}}
+      </ng-container>
+    </ng-template>
+
+    <ng-template #third>
+        <div class = "matchingForm">
+          <i class="material-icons md-18">check</i>
+          &nbsp;
+          <a>Passwords match!</a>
+        </div>
+        {{disableCreate(false)}}
+    </ng-template>
+
+    <button class="cancel_btn" mat-button  (click)="this.router.navigate(['/login'])" >Cancel</button>
+    <button id="continue_btn" type=submit mat-button (click)="createAccount()">Continue</button>
+  </div>
+</div>

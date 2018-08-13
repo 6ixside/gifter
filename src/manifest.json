@@ -4,15 +4,16 @@
  "description": "gifter application as chrome extension using angular",
  "version": "1.0",
  "browser_action": {
- "default_icon": "assets/v2.png",
- "default_popup": "index.html#/create-account"
+ "default_icon": "assets/icon.png",
+ "default_popup": "index.html"
  },
- "permissions": ["tabs", "activeTab", "storage"],
+ "permissions": [
+ 	"storage"
+ ],
  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
  "web_accessible_resources": [
-    "assets/css/*", 
-    "assets/js/*", 
-    "assets/fonts/*"
+ 	"assets/*.abi",
+ 	"assets/*.png",
+ 	"assets/fonts/*.woff"
  ]
-
 }

@@ -31,6 +31,11 @@ export class CardService {
   public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(public http: HttpClient, public as: AccountService){
+    this.index = 0;
+    this.lastLoadIndex = 0;
+    this.loadAmount = 5;
+    this.rowSet = [];
+
   	let cf_abi_url = this.extension.runtime.getURL('/assets/card_factory.abi');
 
     this.loading.next(true);
@@ -41,7 +46,7 @@ export class CardService {
   			this.cf_abi = res;
   			console.log(this.cf_abi);
 
-  			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x9a43b3D279f863E2aA643f272a18FB2C091542Fb');
+  			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0xd0a17Bbb4FfBee6244Cb6f0dDD4d76215708F946');
   			console.log(this.cf_contract);
 
         this.loading.next(false);
@@ -57,7 +62,7 @@ export class CardService {
   	let trx = this.as.createTransactionObject({
   		nonce: this.web3.utils.toHex(nonce),
   		from: "0x746344ca8847996c3159b67f0aa85d1bea7c133c",
-  		to: '0x9a43b3D279f863E2aA643f272a18FB2C091542Fb',
+  		to: '0xd0a17Bbb4FfBee6244Cb6f0dDD4d76215708F946',
   		gas: this.web3.utils.toHex(5000000),
   		gasPrice: this.web3.utils.toHex(1000000000),
   		data: trx_encode
@@ -101,9 +106,20 @@ export class CardService {
     let method = this.cf_contract.methods.getInventory(this.as.accounts[0]);
     let trx_encode = method.encodeABI();
 
+    var _rowset = []
+
     method.call().then((data) => {
-      console.log("cards");
-      console.log(data);
+      var cards = data;
+      console.log('inventories')
+      console.log(cards);
+
+      if(cards && cards.length > 0){
+        _rowset = self.rowSet.concat(cards);
+        self.cardSet.next(_rowset);
+      }
+    }, (err)=> {
+      console.log("inv error");
+      console.log(err);
     });
   }
 

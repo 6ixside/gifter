@@ -1,6 +1,8 @@
 <mat-list>
 	<mat-list-item *ngFor="let card of inventory">
 		<h3>CARD</h3>
-		<p>{{card.test}}</p>
+		<p>{{card}}</p>
 	</mat-list-item>
+
+	<button matButton (click)="this.router.navigate(['/mnemonic'])">mnemonic</button>
 </mat-list>

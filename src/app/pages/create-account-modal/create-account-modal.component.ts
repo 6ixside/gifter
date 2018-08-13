@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 
 @Component({
@@ -9,7 +9,9 @@ import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
 })
 export class CreateAccountModalComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public router: Router) { }
+  constructor(public dialogRef: MatDialogRef<CreateAccountModalComponent>, public router: Router){
+
+  }
 
   ngOnInit() {
   }

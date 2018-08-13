@@ -9,6 +9,8 @@ var sols = {
 
 let compiled = solc.compile({sources: sols}, 1);
 
+console.log(compiled);
+
 for(c in compiled.contracts){
 	console.log(c);
 

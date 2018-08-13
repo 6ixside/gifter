@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@font-face {
+  font-family: 'AvenirNext';
+  font-style: normal;
+  font-weight: 400;
+  src: url('chrome-extension://__MSG_@@extension_id__/assets/fonts/avenir-next-regular.woff') format('woff');
+}
+
 body {
     font-family: Roboto, Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
+

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../shared/services/account.service';
 
 @Component({
   selector: 'gifter-header',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+	public public_key: String;
+
+  constructor(public as: AccountService){
+  	console.log(this.as.accounts);
+  	this.public_key = this.as.accounts[0];
+  }
 
   ngOnInit() {
   }

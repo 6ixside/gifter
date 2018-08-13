@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router';
-import { AccountService } from './../shared/services/account.service'; 
+import { AccountService } from './../../shared/services/account.service'; 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 	@Input() username: String;

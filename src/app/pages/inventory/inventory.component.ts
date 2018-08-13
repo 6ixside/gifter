@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CardService } from '../shared/services/card.service';
+import { CardService } from '../../shared/services/card.service';
+import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router'; 
 
 @Component({
   selector: 'app-inventory',
@@ -10,12 +11,16 @@ export class InventoryComponent implements OnInit {
 
 	public inventory: Array<Object>;
 
-  constructor(public cs: CardService){
-  	this.inventory = [{test: 'a'},{test: 'b'},{test: 'c'}];
+  constructor(public cs: CardService, public router: Router){
+  	this.inventory = [];
 
   	this.cs.loading.subscribe(loading => {
   		if(!loading)
   			this.cs.getNextCards();
+  	});
+
+  	this.cs.cardSet.subscribe(data => {
+  		this.inventory = data;
   	});
   }
 
