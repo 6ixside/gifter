@@ -1,3 +1,4 @@
+import { ShopifyPluginComponent } from './shopify-plugin/shopify-plugin.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -28,7 +29,8 @@ import { CreateAccountModalComponent } from './create-account-modal/create-accou
     TabNavComponent,
     FriendBarComponent,
     CreateAccountComponent,
-    CreateAccountModalComponent
+    CreateAccountModalComponent,
+    ShopifyPluginComponent
   ],
   imports: [
     BrowserModule,
