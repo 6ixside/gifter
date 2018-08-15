@@ -10,7 +10,7 @@ import { ShopifyService } from '../shared/services/shopify.service';
 export class ShopifyPluginComponent implements OnInit {
 
   constructor(public shopifyService: ShopifyService) { 
-    this.shopifyService.listen();
+    this.shopifyService.listen(); //listen for messages from the shopify plugin
   }
 
   ngOnInit() {

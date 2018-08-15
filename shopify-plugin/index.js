@@ -10,6 +10,7 @@ const request = require('request-promise');
 
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
+const extensionId = "cgampgbmlfgmdeklocpnfbbaahaemmgn"; //extension id of google extension plugin would like to interact with
 const scopes = "read_products";
 const forwardingAddress = "https://5676eca4.ngrok.io"; //will change once URL is available
 
@@ -28,7 +29,7 @@ app.get('/shopify', (req, res) => {
     }
 
     else
-        return res.status(400).send("Missing shop parameter. Please add ?shop=giftersixside.myshopify.com to your request"); 
+        return res.status(400).send("Missing shop parameter. Please add ?shop=shop-name.myshopify.com to your request"); 
 });
 
 app.get('/shopify/callback', (req, res) => {
@@ -82,7 +83,11 @@ app.get('/shopify/callback', (req, res) => {
                 'X-Shopify-Access-Token': accessToken,
             };
 
-            res.sendFile(path.join(__dirname + '/index.html'));
+            const message = {
+                content : "Testing connection to extension"
+            };
+
+            chrome.runtime.sendMessage(extensionId, {json: message}); //send message to extension
         })
         .catch((error) => {
             res.status(error.statusCode).send(error.error.error_description);
