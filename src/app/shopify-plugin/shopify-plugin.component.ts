@@ -9,13 +9,11 @@ import { ShopifyService } from '../shared/services/shopify.service';
 })
 export class ShopifyPluginComponent implements OnInit {
 
-  constructor(public shopifyService: ShopifyService) { }
-
-  ngOnInit() {
+  constructor(public shopifyService: ShopifyService) { 
+    this.shopifyService.listen();
   }
 
-  search(){
-    this.shopifyService.search();
+  ngOnInit() {
   }
 
 }

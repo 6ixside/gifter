@@ -7,7 +7,7 @@ export class ShopifyService {
 
   constructor() { }
 
-  search(){
+  listen() {
     
   }
 }
