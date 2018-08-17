@@ -8,7 +8,7 @@ export class ShopifyService {
 
   constructor() { }
 
-  listen() {
+  public listen() {
     //Open up the extension to external messages to be sent from shopify plugin
     chrome.runtime.onMessageExternal.addListener(
       function(message, sender, sendResponse) {
