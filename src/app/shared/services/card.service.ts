@@ -36,22 +36,38 @@ export class CardService {
     this.loadAmount = 5;
     this.rowSet = [];
 
-  	let cf_abi_url = this.extension.runtime.getURL('/assets/card_factory.abi');
+    let cf_abi_url;
 
-    this.loading.next(true);
-  	fetch(cf_abi_url).then((res) => {
-  		this.http.get(res.url, {
-  			withCredentials: true
-  		}).subscribe((res) => {
-  			this.cf_abi = res;
-  			console.log(this.cf_abi);
-
-  			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0xd0a17Bbb4FfBee6244Cb6f0dDD4d76215708F946');
-  			console.log(this.cf_contract);
-
+    try{
+  	  cf_abi_url = this.extension.runtime.getURL('/assets/card_factory.abi');
+    } catch(e){
+      this.loading.next(true);
+      this.http.get('http://localhost:4200/assets/card_factory.abi', {
+        withCredentials: true
+      }).subscribe((res) => {
+        console.log(res);
+        this.cf_abi = res;
+        this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB');
         this.loading.next(false);
-  		});
-  	});
+      });
+    }
+
+    if(cf_abi_url){
+      this.loading.next(true);
+    	fetch(cf_abi_url).then((res) => {
+    		this.http.get(res.url, {
+    			withCredentials: true
+    		}).subscribe((res) => {
+    			this.cf_abi = res;
+    			console.log(this.cf_abi);
+
+    			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB');
+    			console.log(this.cf_contract);
+
+          this.loading.next(false);
+    		});
+    	});
+    }
   }
 
   public async createCard(company, value){
@@ -62,7 +78,7 @@ export class CardService {
   	let trx = this.as.createTransactionObject({
   		nonce: this.web3.utils.toHex(nonce),
   		from: "0x746344ca8847996c3159b67f0aa85d1bea7c133c",
-  		to: '0xd0a17Bbb4FfBee6244Cb6f0dDD4d76215708F946',
+  		to: '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB',
   		gas: this.web3.utils.toHex(5000000),
   		gasPrice: this.web3.utils.toHex(1000000000),
   		data: trx_encode
@@ -104,17 +120,29 @@ export class CardService {
     var quantity = this.loadAmount;
 
     let method = this.cf_contract.methods.getInventory(this.as.accounts[0]);
+    //let method = this.cf_contract.methods.inventories(this.as.accounts[0], 0);
     let trx_encode = method.encodeABI();
 
     var _rowset = []
 
     method.call().then((data) => {
       var cards = data;
-      console.log('inventories')
-      console.log(cards);
+      console.log('inventories');
 
-      if(cards && cards.length > 0){
-        _rowset = self.rowSet.concat(cards);
+      let cs = [];
+      for(var i = 0; i < cards[0].length; i++){
+        cs.push({
+          name: cards[0][i],
+          balance: cards[1][i],
+          canTrade: cards[2][i],
+          id: cards[3][i]
+        })
+      }
+
+      console.log(cs);
+
+      if(cs && cs.length > 0){
+        _rowset = self.rowSet.concat(cs);
         self.cardSet.next(_rowset);
       }
     }, (err)=> {

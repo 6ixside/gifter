@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CardService } from '../../shared/services/card.service';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router'; 
+import BigNumber from 'big-number';
 
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.css']
+  styleUrls: ['./inventory.component.scss']
 })
 export class InventoryComponent implements OnInit {
 
@@ -20,7 +21,7 @@ export class InventoryComponent implements OnInit {
   	});
 
   	this.cs.cardSet.subscribe(data => {
-  		this.inventory = data;
+  		this.buildInventory(data);
   	});
   }
 
@@ -37,6 +38,35 @@ export class InventoryComponent implements OnInit {
   	}
 
   	this.cs.getNextCards();
+  }
+
+  //build up to 4 at a time
+  buildInventory(data){
+    var c_name = null;
+    var h1 = null;
+    var decVals = [];
+
+    for(var i = 0; i < data.length; i++){
+      c_name = data[i].name.split('');
+
+      while(c_name.length){
+        h1 = parseInt(c_name.shift());
+
+        for(var j = 0; h1 || j < decVals.length; j++){
+          h1 += (decVals[j] || 0) * 10;
+          decVals[j] = h1 % 16;  
+          h1 = (h1 - decVals[j]) / 16;
+        }
+      }
+
+      c_name = '';
+      while(decVals.length){
+        c_name += String.fromCharCode(parseInt('0x' + decVals.pop().toString(16) + decVals.pop().toString(16)));
+      }
+
+      data[i].name = c_name;
+      this.inventory.push(data[i]);
+    }
   }
 
 }

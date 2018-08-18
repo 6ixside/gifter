@@ -5,7 +5,7 @@ import { CardService } from './../shared/services/card.service';
 @Component({
   selector: 'gifter-tab-nav',
   templateUrl: './tab-nav.component.html',
-  styleUrls: ['./tab-nav.component.css']
+  styleUrls: ['./tab-nav.component.scss']
 })
 export class TabNavComponent implements OnInit {
 

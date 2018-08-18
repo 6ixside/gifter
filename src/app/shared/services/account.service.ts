@@ -43,7 +43,7 @@ export class AccountService {
 
 			this.keyringController.signTransaction.bind(this.keyringController);
 
-			console.log(data);
+			console.log(this.keyringController);
   	}, (err) => {console.log(err);});
   }
 
@@ -79,11 +79,12 @@ export class AccountService {
 
 		  	this.setState(this.keyringState).then((data) => {
 		  		this.accountState['KEY'].next(this.keyringState);
-		  	}, (err) => {console.log(err)});
+		  	}, (err) => {reject(err)});
 
 		  	//get the unlocked accounts
 		  	this.keyringController.getAccounts().then(data => {
 		  		this.accounts = data;
+		  		console.log(this.accounts[0]);
 		  		resolve();
 		  	});
 	  	}, (err) => {
@@ -97,13 +98,16 @@ export class AccountService {
   /*Loads the last state from local storage, if local storage doesn't exist, assume undefined last state*/
   public loadLastState(){
   	//chrome's local storage object for extensions
-  	let localStorage = this.extension.storage ? this.extension.storage.local : undefined;
+  	let localStorage = this.extension.storage ? this.extension.storage.local : window.localStorage;
 
   	return new Promise((resolve, reject) => {
-  		if(localStorage === undefined)
-				resolve(undefined);
+  		if(!this.extension.storage){
+  			console.log('getting from local');
+				resolve(localStorage);
+			}
 			else{
 				//gets all the localstorage data
+				console.log('getting from extenion');
 		    localStorage.get(null, (result) => {
 		      if(this.extension.runtime.lastError){
 		      	console.log(this.extension.runtime.lastError);
@@ -119,18 +123,27 @@ export class AccountService {
 
   //sets information pertaining to the user's account
   public setState(state){
-  	let localStorage = this.extension.storage.local;
+  	let localStorage = this.extension.storage ? this.extension.storage.local : window.localStorage;
 
     return new Promise((resolve, reject) => {
-      localStorage.set(state, () => {
-        if(this.extension.runtime.lastError){
-        	console.log(this.extension.runtime.lastError);
-          reject(this.extension.runtime.lastError);
-        } 
-        else{
-          resolve();
-        }
-      });
+    	if(!this.extension.storage){
+    		for(let key of Object.keys(state)){
+    			localStorage.setItem(key, state[key]);
+    		}
+
+				resolve();
+			}
+			else{
+	      localStorage.set(state, () => {
+	        if(this.extension.runtime.lastError){
+	        	console.log(this.extension.runtime.lastError);
+	          reject(this.extension.runtime.lastError);
+	        } 
+	        else{
+	          resolve();
+	        }
+	      });
+	    }
     });
   }
 

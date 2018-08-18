@@ -44,22 +44,30 @@ contract CardFactory is Ownable {
 
       //create a giftcard as a 256 bit binary object
       uint256 card = uint256(_company);  
-      card |= _balance << 200;
-      card |= 0 << 216;
-      card |= id << 224;
+      card |= uint256(_balance)<<200;
+      card |= uint256(0)<<216;
+      card |= uint256(id)<<224;
 
       inventories[msg.sender].push(card);
       emit NewCard(id, _company, 0);
     }
 
-    function getInventory(address _owner) public view returns(uint256[]){
-      uint256[] memory rowsub = new uint256[](4) //get 4 cards at a time to feed the iterator in fe
+    function getInventory(address _owner) public view returns(uint256[], uint256[], uint256[], uint256[], uint256[]){
+      uint256[] memory rowsub = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4); //get 4 cards at a time unless there are less than 4 cards to get
+      uint256[] memory companies = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
+      uint256[] memory balances = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
+      uint256[] memory trades = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
+      uint256[] memory ids = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
 
-      for(uint i = 0; i < 4; i++){
-        rowsub[i] = inventories[_owner][i];
+      for(uint i = 0; i < (inventories[_owner].length < 4 ? inventories[_owner].length : 4); i++){
+          rowsub[i] = inventories[_owner][i];
 
+          companies[i] = uint256(uint200(rowsub[i]));
+          balances[i] = uint256(uint16(rowsub[i]>>200));
+          trades[i] = uint256(uint8(rowsub[i]>>216));
+          ids[i] = uint256(uint32(rowsub[i]>>224));
       }
 
-      return inventories[_owner];
+      return (companies, balances, trades, ids);
     }
 }
