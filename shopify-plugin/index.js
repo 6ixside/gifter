@@ -7,17 +7,26 @@ const nonce = require('nonce')();
 const path = require('path');
 const querystring = require('querystring');
 const request = require('request-promise');
+const server = require('http').createServer(app);
+const Shopify = require('shopify-api-node');
 
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const extensionId = "cgampgbmlfgmdeklocpnfbbaahaemmgn"; //extension id of google extension plugin would like to interact with
 const scopes = "read_products";
-const shopify = null;
+var shopify = null;
 const forwardingAddress = "https://5676eca4.ngrok.io"; //will change once URL is available
+
+var socket = require('socket.io')(server);
+server.listen(3000, function(){
+    console.log("Listening on port 3000");
+});
+socket.on('connection', function() {
+    console.log("Connected");
+});
 
 app.get('/shopify', (req, res) => {
     const shop = req.query.shop;
-    console.log(shop);
     if (shop) {
         const state = nonce();
         const redirectUri = forwardingAddress + '/shopify/callback';
@@ -88,6 +97,7 @@ app.get('/shopify/callback', (req, res) => {
             createInstance(accessToken, shop); //access resources from shop by creating a new instance
         })
         .catch((error) => {
+            console.log(error);
             res.status(error.statusCode).send(error.error.error_description);
         });
     }
@@ -99,12 +109,10 @@ app.get('/shopify/callback', (req, res) => {
 });
 
 function createInstance(access_token, shop_name) {
+    console.log("Creating Instance");
     shopify = new Shopify({
         shopName: shop_name,
         accessToken: access_token
     });
-}
 
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!');
-});
+}

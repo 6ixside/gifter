@@ -1,19 +1,19 @@
 /// <reference types = "chrome"/>
 import { Injectable } from '@angular/core';
+import Socket from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopifyService {
+  public socket = Socket;
 
   constructor() { }
 
   public listen() {
-    //Open up the extension to external messages to be sent from shopify plugin
-    chrome.runtime.onMessageExternal.addListener(
-      function(message, sender, sendResponse) {
-        if(message)
-          console.log(message);
-      });
+    const sock = this.socket('http://localhost:3000');
+    sock.on('connect', function() {
+
+    });
   }
 }

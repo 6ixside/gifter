@@ -8,6 +8,7 @@
  "default_popup": "index.html#/create-account"
  },
  "externally_connectable": {
+     "ids" : ["*"],
      "matches" : ["*://*.myshopify.com/*"]
  },
  "permissions": ["tabs", "activeTab", "storage"],
