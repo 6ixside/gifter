@@ -21,9 +21,16 @@ var socket = require('socket.io')(server);
 server.listen(3000, function(){
     console.log("Listening on port 3000");
 });
-socket.on('connection', function() {
+
+socket.on('connection', function(sock) {
     console.log("Connected");
+    sock.send('Connected on port 3000');
+    sock.on('message', function(msg) {
+        console.log(msg);
+    });
 });
+
+
 
 app.get('/shopify', (req, res) => {
     const shop = req.query.shop;

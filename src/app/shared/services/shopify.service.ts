@@ -12,8 +12,16 @@ export class ShopifyService {
 
   public listen() {
     const sock = this.socket('http://localhost:3000');
-    sock.on('connect', function() {
+    sock.on('connection', function() {
+      console.log("Connected");
+    });
 
+    sock.on('message', function(msg) {
+      console.log(msg);
+    });
+
+    sock.on('disconnect', function() {
+      console.log("Socket disconnected");
     });
   }
 }
