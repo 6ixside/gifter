@@ -1,3 +1,4 @@
+import { ShopifyPluginComponent } from './shopify-plugin/shopify-plugin.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -34,7 +35,8 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     CreateAccountModalComponent,
     InventoryComponent,
     ViewMnemonicComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    ShopifyPluginComponent
   ],
   imports: [
     BrowserModule,
