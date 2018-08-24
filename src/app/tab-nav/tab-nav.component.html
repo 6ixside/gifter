@@ -3,7 +3,6 @@
     <ng-template mat-tab-label>
      <mat-icon class="example-tab-icon">Inventory</mat-icon>
    </ng-template>
-
     <app-inventory></app-inventory>
   </mat-tab>
 
@@ -14,6 +13,7 @@
 
     Trading/Marketplace goes here
     <button mat-button primary (click)="createCard()">new</button>
+    <app-shopify-plugin></app-shopify-plugin>
   </mat-tab>
 
   <mat-tab disabled>
@@ -23,18 +23,3 @@
       </button>
     </ng-template>
   </mat-tab>
-
-  <!--<a mat-tab-link label="three">
-    <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">swap_horiz</mat-icon>
-    </ng-template>
-    <button mat-button primary (click)="createCard()">new</button>
-<<<<<<< HEAD
-    <app-shopify-plugin></app-shopify-plugin>
-  </mat-tab>
-=======
-  </a>-->
-
-  <button mat-button>test</button>
->>>>>>> Dev
-</mat-tab-group>
