@@ -39,6 +39,7 @@ package-lock.json
 *.bin
 *.abi
 *.png
+/shopify-plugin/.env
 
 # e2e
 /e2e/*.js
