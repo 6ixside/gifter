@@ -1,21 +1,40 @@
 <mat-tab-group mat-stretch-tabs>
-  <mat-tab>
+  <mat-tab style="width: 33%">
     <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">list</mat-icon>
-    </ng-template>
-    List goes here
+     <mat-icon class="example-tab-icon">Inventory</mat-icon>
+   </ng-template>
+
+    <app-inventory></app-inventory>
   </mat-tab>
-  <mat-tab>
+
+  <mat-tab style="width: 33%">
     <ng-template mat-tab-label>
-      <mat-icon class="example-tab-icon">card_giftcard</mat-icon>
+      <mat-icon class="example-tab-icon">swap_horiz</mat-icon>
     </ng-template>
-    Gifting process goes here
+
+    Trading/Marketplace goes here
+    <button mat-button primary (click)="createCard()">new</button>
   </mat-tab>
-  <mat-tab label="three">
+
+  <mat-tab disabled>
+    <ng-template mat-tab-label>
+      <button class="purchase_btn" (click)="console.log('purchasing')" mat-raised-button color="primary">
+        <p>Purchase</p>
+      </button>
+    </ng-template>
+  </mat-tab>
+
+  <!--<a mat-tab-link label="three">
     <ng-template mat-tab-label>
       <mat-icon class="example-tab-icon">swap_horiz</mat-icon>
     </ng-template>
     <button mat-button primary (click)="createCard()">new</button>
+<<<<<<< HEAD
     <app-shopify-plugin></app-shopify-plugin>
   </mat-tab>
+=======
+  </a>-->
+
+  <button mat-button>test</button>
+>>>>>>> Dev
 </mat-tab-group>

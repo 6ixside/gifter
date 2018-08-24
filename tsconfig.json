@@ -19,5 +19,8 @@
     "types": [
       "chrome"
     ]
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

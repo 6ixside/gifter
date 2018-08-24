@@ -1,0 +1,29 @@
+<div class="login_container">
+	<div class="login_header">
+		<div class="logo_container">
+			<img src="assets/logo.png" />
+		</div>
+	</div>
+
+	<div class="login_content">
+		<div class="login_info">
+			<p class="login_description">Log Into Your Account</p>
+			<div class="new_account_container">
+				<p class="no_account">Don't have an account?</p>
+				<span class="spacer"></span>
+				<a class="new_account" (click)="this.router.navigate(['/create-account'])">Create New</a>
+			</div>
+		</div>
+
+		<div class="form_container">
+			<mat-form-field class="gifter_pw_input">
+				<input matInput [(ngModel)]="password" type = "password"/>
+				<mat-placeholder class="placeholder">Type Your Password</mat-placeholder>
+				<mat-icon matSuffix>remove_red_eye</mat-icon>
+			</mat-form-field>
+
+			<button class="restore_btn" mat-button>Restore Account?</button>
+			<button class="login_btn" type=submit mat-button (click)="sendAuth()">Log in</button>
+		</div>
+	</div>
+</div>

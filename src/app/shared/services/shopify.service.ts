@@ -13,7 +13,7 @@ export class ShopifyService {
   public listen() {
     const sock = this.socket('http://localhost:3000');
     sock.on('connection', function() {
-      console.log("Connected");
+      console.log("Socket connected");
     });
 
     sock.on('message', function(msg) {

@@ -38,7 +38,11 @@ testem.log
 package-lock.json
 *.bin
 *.abi
+<<<<<<< HEAD
 .env
+=======
+*.png
+>>>>>>> Dev
 
 # e2e
 /e2e/*.js

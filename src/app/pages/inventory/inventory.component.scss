@@ -1,0 +1,69 @@
+@import './../../app.component.scss';
+
+.card_container{
+	margin-bottom: 5px;
+}
+
+.card_image_container{
+	display: inline-block;
+}
+
+.card_image_container > img{
+	width: 100px;
+	height: 100px;
+}
+
+.card_name{
+	display: inline-block;
+	color: $main_font_color;
+	font-family: $main_font;
+	margin-left: 20px;
+    margin-bottom: 0px;
+    vertical-align: top;
+}
+
+.card_description{
+	margin-left: 20px;
+	margin-right: 20px;
+	color: $main_font_color;
+	font-family: $main_font;
+	font-size: 14px;
+}
+
+.card_value{
+	display: inline-block;
+	float: right;
+	margin-right: 20px;
+}
+
+.card_content{
+	display: inline-block;
+	width: 260px;
+	height: 100px;
+	vertical-align: top;
+}
+
+.card_btns_container{
+	text-align: center;
+}
+
+.redeem_btn{
+	background-color: $sub;
+	width: 32%;
+    margin: 0.5%;
+    border-radius: 0;
+}
+
+.gift_btn{
+	background-color: $main;
+	width: 32%;
+    margin: 0.5%;
+    border-radius: 0;
+}
+
+.trade_btn{
+	background-color: $accent;
+	width: 32%;
+    margin: 0.5%;
+    border-radius: 0;
+}

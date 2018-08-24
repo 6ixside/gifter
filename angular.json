@@ -21,10 +21,12 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.json",
+              { "glob": "card_factory.abi", "input": "./", "output": "./assets/" }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/theme.scss"
             ],
             "scripts": ["./node_modules/hammerjs/hammer.min.js"]
           },

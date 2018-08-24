@@ -13,7 +13,7 @@ import ObservableStore from 'obs-store';
 export class AccountService {
 	/*i like lowercase*/
 	public extension = Extension;
-	public store = new ObservableStore();
+	//public store = new ObservableStore();
 
 	/*sets the provider to the infura rinkeby node*/
 	public web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/"));
@@ -43,7 +43,7 @@ export class AccountService {
 
 			this.keyringController.signTransaction.bind(this.keyringController);
 
-			console.log(data);
+			console.log(this.keyringController);
   	}, (err) => {console.log(err);});
   }
 
@@ -65,8 +65,6 @@ export class AccountService {
   	this.setState({'EMAIL': email}).then((data) => {
   		this.accountState['EMAIL'].next(email);
 		}, (err) => {console.log(err)});
-		
-		await this.generateMnemonic();
   }
 
   /*Login only needs to verify the password that should be stored in local storage
@@ -76,20 +74,19 @@ export class AccountService {
   	//sets the keyrings to the set of all keyrings after unlock (for us should only be cardinality 1)
   	return new Promise((resolve, reject) => {
   		this.keyring = this.keyringController.unlockKeyrings(password).then((data) => {
-	  		//get the unlocked accounts
-		  	this.keyringController.getAccounts().then(data => {
-		  		this.accounts = data;
-		  		console.log("The data is: " + data);
-		  	});
-
 		  	this.keyringState = this.keyringController.store.getState();
 		  	this.keyringController.fullUpdate();
 
 		  	this.setState(this.keyringState).then((data) => {
 		  		this.accountState['KEY'].next(this.keyringState);
-		  	}, (err) => {console.log(err)});
+		  	}, (err) => {reject(err)});
 
-		  	resolve();
+		  	//get the unlocked accounts
+		  	this.keyringController.getAccounts().then(data => {
+		  		this.accounts = data;
+		  		console.log(this.accounts[0]);
+		  		resolve();
+		  	});
 	  	}, (err) => {
 	  		console.log(err);
 	  		reject(err);
@@ -101,13 +98,16 @@ export class AccountService {
   /*Loads the last state from local storage, if local storage doesn't exist, assume undefined last state*/
   public loadLastState(){
   	//chrome's local storage object for extensions
-  	let localStorage = this.extension.storage ? this.extension.storage.local : undefined;
+  	let localStorage = this.extension.storage ? this.extension.storage.local : window.localStorage;
 
   	return new Promise((resolve, reject) => {
-  		if(localStorage === undefined)
-				resolve(undefined);
+  		if(!this.extension.storage){
+  			console.log('getting from local');
+				resolve(localStorage);
+			}
 			else{
 				//gets all the localstorage data
+				console.log('getting from extenion');
 		    localStorage.get(null, (result) => {
 		      if(this.extension.runtime.lastError){
 		      	console.log(this.extension.runtime.lastError);
@@ -123,18 +123,27 @@ export class AccountService {
 
   //sets information pertaining to the user's account
   public setState(state){
-  	let localStorage = this.extension.storage.local;
+  	let localStorage = this.extension.storage ? this.extension.storage.local : window.localStorage;
 
     return new Promise((resolve, reject) => {
-      localStorage.set(state, () => {
-        if(this.extension.runtime.lastError){
-        	console.log(this.extension.runtime.lastError);
-          reject(this.extension.runtime.lastError);
-        } 
-        else{
-          resolve();
-        }
-      });
+    	if(!this.extension.storage){
+    		for(let key of Object.keys(state)){
+    			localStorage.setItem(key, state[key]);
+    		}
+
+				resolve();
+			}
+			else{
+	      localStorage.set(state, () => {
+	        if(this.extension.runtime.lastError){
+	        	console.log(this.extension.runtime.lastError);
+	          reject(this.extension.runtime.lastError);
+	        } 
+	        else{
+	          resolve();
+	        }
+	      });
+	    }
     });
   }
 
@@ -143,10 +152,23 @@ export class AccountService {
   }
 
   public signTransaction(trx){
+  	console.log('signing with: ' + this.accounts[0]);
   	return this.keyringController.signTransaction(trx, this.accounts[0]);
 	}
 
-	public setData(data){
+	public getMnemonic(){
+		return new Promise((resolve, reject) => {
+			var keyring = this.keyringController.getKeyringsByType('HD Key Tree')[0];
+			if(!keyring)
+				reject("Couldn't find an HD key tree");
+
+			keyring.serialize().then((data) => {
+				resolve(data.mnemonic);
+			}, (err) => {reject(err);});
+		});
+	}
+
+	/*public setData(data){
 		this.store.putState(data);
 	}
 
@@ -174,5 +196,5 @@ export class AccountService {
 	public getMnemonic() {
 		var data = this.getData();
 		return data.mnemonic;
-	}
+	}*/
 }

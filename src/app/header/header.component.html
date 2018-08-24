@@ -1,5 +1,18 @@
-<mat-toolbar color="primary">
-  <span>user-name</span>
-  <span class="spacer"></span>
-  <button mat-icon-button><mat-icon>settings</mat-icon></button>
+<mat-toolbar class="gifter_header">
+	<div class="user_info_container">
+		<div id="icon_container">
+			<img src="{{icon}}" />
+		</div>
+		<p class="username">{{user}}</p>
+	</div>
+
+	<span class="spacer"></span>
+
+	<div class="logo_container">
+		<img src="assets/logo.png" />
+    </div>
+
+    <span class="spacer"></span>
+
+	<button mat-icon-button><mat-icon>settings</mat-icon></button>
 </mat-toolbar>
