@@ -129,6 +129,8 @@ export class CardService {
       var cards = data;
       console.log('inventories');
 
+      console.log(cards);
+
       let cs = [];
       for(var i = 0; i < cards[0].length; i++){
         cs.push({
