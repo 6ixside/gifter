@@ -1,3 +1,4 @@
+import { ShopifyPluginComponent } from './shopify-plugin/shopify-plugin.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -36,7 +37,8 @@ import { IpfsService } from './shared/services/ipfs.service';
     CreateAccountModalComponent,
     InventoryComponent,
     ViewMnemonicComponent,
-    ConfirmationModalComponent
+    ConfirmationModalComponent,
+    ShopifyPluginComponent
   ],
   imports: [
     BrowserModule,

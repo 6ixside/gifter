@@ -38,7 +38,15 @@ testem.log
 package-lock.json
 *.bin
 *.abi
+<<<<<<< HEAD
+.env
+=======
 *.png
+<<<<<<< HEAD
+/shopify-plugin/.env
+=======
+>>>>>>> Dev
+>>>>>>> shopify-plugin
 
 # e2e
 /e2e/*.js
