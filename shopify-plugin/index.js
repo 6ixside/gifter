@@ -17,6 +17,7 @@ const scopes = "read_products";
 var shopify = null;
 const forwardingAddress = "https://5676eca4.ngrok.io"; //will change once URL is available
 
+
 var socket = require('socket.io')(server);
 server.listen(3000, function(){
     console.log("Listening on port 3000");
@@ -30,10 +31,8 @@ socket.on('connection', function(sock) {
     });
 });
 
-
-
 app.get('/shopify', (req, res) => {
-    const shop = req.query.shop;
+    var shop = req.query.shop;
     if (shop) {
         const state = nonce();
         const redirectUri = forwardingAddress + '/shopify/callback';
@@ -102,9 +101,9 @@ app.get('/shopify/callback', (req, res) => {
             };
 
             createInstance(accessToken, shop); //access resources from shop by creating a new instance
+            setInterval(checkEvents, 3000); //check for new events every 3 seconds
         })
         .catch((error) => {
-            console.log(error);
             res.status(error.statusCode).send(error.error.error_description);
         });
     }
@@ -115,11 +114,22 @@ app.get('/shopify/callback', (req, res) => {
 
 });
 
+function checkEvents() {
+    if(!shopify) {
+        return;
+    }
+
+    else {
+        shopify.event.get(function(data) {
+            console.log(data);
+        });
+    }
+}
+
 function createInstance(access_token, shop_name) {
     console.log("Creating Instance");
     shopify = new Shopify({
         shopName: shop_name,
         accessToken: access_token
-    });
-
+    }); 
 }
