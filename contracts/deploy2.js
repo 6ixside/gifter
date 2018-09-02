@@ -5,9 +5,10 @@ var net = require("net");
 var EthereumTx = require('ethereumjs-tx');
 var EthereumUtil = require('ethereumjs-util');
 
-var abi = JSON.parse(fs.readFileSync('./card_factory.abi'));
-var con = fs.readFileSync('./card_factory.bin');
+var abi = JSON.parse(fs.readFileSync('./CompanyFactory.abi'));
+var con = fs.readFileSync('./CompanyFactory.bin');
 
+//you are dumb if you try to steal this pk because we only use this address on the rinkeby testnet
 var pk = new Buffer('c32daf23b2a37cc7d0238311434ecb64454d74c365a2ec9b70fa9dbfebcca536', 'hex');
 
 //create a new Web3 object
@@ -48,20 +49,3 @@ web3.eth.getTransactionCount(acc.address).then(data => {
 					})
 					.on('error', console.error);
 });
-
-
-
-/*contract.deploy({
-	data: "0x" + con
-}).send({
-	from: acc.address,
-	gas: 2000000
-}).on('error', function(err){})
-  .on('transactionHash', function(transactionHash){console.log("The transaction hash is: " + transactionHash);})
-  .on('receipt', function(receipt){if(receipt.contactAddress != null) console.log("The contact address is: " + receipt.contactAddress);})
-  .on('confirmation', function(confirmationNumber, receipt){console.log("The confirmation number is: " + confirmationNumber)})
-  .then(function (newContractInstance){
-  console.log(newContractInstance.options.address);
-   }, function(err){
-   		console.log(err);
-   });*/

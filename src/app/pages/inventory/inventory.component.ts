@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CardService } from '../../shared/services/card.service';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router'; 
+import { IpfsService } from '../../shared/services/ipfs.service';
 import BigNumber from 'big-number';
 
 @Component({
@@ -11,8 +12,9 @@ import BigNumber from 'big-number';
 export class InventoryComponent implements OnInit {
 
 	public inventory: Array<Object>;
+  public image;
 
-  constructor(public cs: CardService, public router: Router){
+  constructor(public cs: CardService, public is: IpfsService, public router: Router){
   	this.inventory = [];
 
   	this.cs.loading.subscribe(loading => {
@@ -23,10 +25,25 @@ export class InventoryComponent implements OnInit {
   	this.cs.cardSet.subscribe(data => {
   		this.buildInventory(data);
   	});
+
+    this.is.isReady.subscribe(data => {
+      if(data)
+        this.getFile();
+    });
   }
 
   ngOnInit() {
  
+  }
+
+  getFile(){
+    var self = this;
+
+    this.is.getFile().then((data) => {
+      this.image = 'data:image/png;base64,' + data;
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   getNext(){

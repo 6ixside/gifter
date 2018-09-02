@@ -2,9 +2,9 @@ pragma solidity ^0.4.24;
 //pragma experimental ABIEncoderV2;
 
 import "./ownable.sol";
+import "./CompanyFactory.sol";
 
 contract CardFactory is Ownable {
-
 
     event NewCard(uint indexed cardId, uint200 indexed company, uint indexed dna);
 
@@ -16,6 +16,7 @@ contract CardFactory is Ownable {
 
     Card[] public cards;
 
+    //mapping (uint => bytes32) public 
     mapping (uint => address) public cardToOwner;
     mapping (uint => bool) public isTrading;
     mapping (uint => string) public tradingFor;

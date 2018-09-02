@@ -15,13 +15,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { TabNavComponent } from './tab-nav/tab-nav.component';
 import { FriendBarComponent } from './friend-bar/friend-bar.component';
-
-import { AccountService } from './shared/services/account.service';
-import { CardService } from './shared/services/card.service';
 import { CreateAccountModalComponent } from './pages/create-account-modal/create-account-modal.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { ViewMnemonicComponent } from './pages/view-mnemonic/view-mnemonic.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+
+//services
+import { AccountService } from './shared/services/account.service';
+import { CardService } from './shared/services/card.service';
+import { IpfsService } from './shared/services/ipfs.service';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([]),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -47,7 +50,8 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     BrowserAnimationsModule
   ],
   providers: [AccountService,
-              CardService],
+              CardService,
+              IpfsService],
   bootstrap: [AppComponent],
   entryComponents: [CreateAccountModalComponent,
                     ConfirmationModalComponent]
