@@ -1,7 +1,6 @@
 pragma solidity ^0.4.24;
 //pragma experimental ABIEncoderV2;
 
-import "./ownable.sol";
 import "./CompanyFactory.sol";
 
 contract CardFactory is Ownable {

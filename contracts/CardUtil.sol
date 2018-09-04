@@ -4,12 +4,16 @@ pragma solidity ^0.4.24;
 import "./ownable.sol";
 import "./CompanyFactory.sol";
 
-contract CardUtil is CompanyFactory {
+contract CardUtil {
+
+	CompanyFactory cf;
 
 	mapping (address => uint256[]) public inventories;
 
-	function purchaseCard(address companyAddress, uint16 cardPosition) external{
-		inventories[msg.sender].push(owners[companyAddress].cards[cardPosition].dna);
+	function purchaseCard(address companyAddress, uint16 cardPosition) public{
+		uint256 dna = cf.getOwner(companyAddress).getCardDnas()[cardPosition];
+
+		inventories[msg.sender].push(dna);
 	}
 
 	function getInventory(address _owner) public view returns(uint256[], uint256[], uint256[], uint256[], uint256[]){
@@ -29,5 +33,9 @@ contract CardUtil is CompanyFactory {
     }
 
     return (companies, balances, trades, ids, rowsub);
+  }
+
+  constructor(address a) public{
+  	cf = CompanyFactory(a);
   }
 }

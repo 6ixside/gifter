@@ -20,6 +20,25 @@ export class CardService {
 	public cf_abi: any;
 	public cf_contract: any;
 
+  //TODO: move contracts to a config file
+  private contracts: Object = {
+    'card_factory': {
+      'path': 'assets/card_factory.abi',
+      'address': '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB'
+    },
+
+    'company_factory': {
+      'path': 'assets/CompanyFactory.abi',
+      'address': '0x8bF785d9c9a0490778f9480582037832362a3737'
+    },
+
+    'card_util': {
+      'path': 'assets/CardUtil.abi',
+      'address': '0x33E46a87A2Eabdc7de66B494848f91f4D45be35E'
+    }
+
+  };
+
   //iterator variables for getting user cards
   public index: number;
   public lastLoadIndex: number;
@@ -42,6 +61,17 @@ export class CardService {
   	  cf_abi_url = this.extension.runtime.getURL('/assets/card_factory.abi');
     } catch(e){
       this.loading.next(true);
+
+      for(var con in this.contracts){
+        this.http.get('http://localhost:4200/' + this.contracts[con].path, {
+          withCredentials: true
+        }).subscribe((res: any) => {
+          this.contracts[con]['contract'] = new this.web3.eth.Contract(res, this.contracts[con].address);
+          this.loading.next(false);
+        })
+      }
+
+      /*this.loading.next(true);
       this.http.get('http://localhost:4200/assets/card_factory.abi', {
         withCredentials: true
       }).subscribe((res) => {
@@ -49,7 +79,7 @@ export class CardService {
         this.cf_abi = res;
         this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB');
         this.loading.next(false);
-      });
+      });*/
     }
 
     if(cf_abi_url){
@@ -71,14 +101,14 @@ export class CardService {
   }
 
   public async createCard(company, value){
-  	let method = this.cf_contract.methods.createRandomCard();
+  	let method = this.contracts['card_util']['contract'].methods.purchaseCard('0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681', 0);
   	let trx_encode = method.encodeABI();
   	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
 
   	let trx = this.as.createTransactionObject({
   		nonce: this.web3.utils.toHex(nonce),
-  		from: "0x746344ca8847996c3159b67f0aa85d1bea7c133c",
-  		to: '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB',
+  		from: this.as.accounts[0],
+  		to: '0x33E46a87A2Eabdc7de66B494848f91f4D45be35E',
   		gas: this.web3.utils.toHex(5000000),
   		gasPrice: this.web3.utils.toHex(1000000000),
   		data: trx_encode
@@ -119,7 +149,7 @@ export class CardService {
     var offset = this.lastLoadIndex;
     var quantity = this.loadAmount;
 
-    let method = this.cf_contract.methods.getInventory(this.as.accounts[0]);
+    let method = this.contracts['card_util']['contract'].methods.getInventory(this.as.accounts[0]);
     //let method = this.cf_contract.methods.inventories(this.as.accounts[0], 0);
     let trx_encode = method.encodeABI();
 
