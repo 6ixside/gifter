@@ -4,14 +4,14 @@ const fs = require('fs');
 const node = new IPFS();
 
 node.on('ready', async () => {
-	fs.readFile('./ctire.png', async (err, data) => {
+	fs.readFile('./th.png', async (err, data) => {
 		if(err){
 			console.log(err);
 			return;
 		}
 
 		let file =  await node.files.add({
-			path: 'canadian_tire.png',
+			path: 'tommy_hilfiger.png',
 			content: data
 		});
 
@@ -21,3 +21,6 @@ node.on('ready', async () => {
 });
 
 //QmNtW2eFMCTGR3CY7237BGobYpdpj7NGo8igMn7dy3C1Le canadian tire
+
+//QmPU94WFNDgLVM8GK83tn1WUxnySsmyPEdXSeSFtp3XLta tommy hilfiger
+//122010C6CF594B689E12ECA4EAD50420654A5BCFC1862AA5AB2FD15F31EC5893694B tommy hilfiger
