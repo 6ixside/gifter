@@ -3,12 +3,15 @@ const express = require('express');
 const app = express();
 const crypto = require('crypto');
 const cookie = require('cookie');
+const fs = require("fs");
 const nonce = require('nonce')();
 const path = require('path');
 const querystring = require('querystring');
 const request = require('request-promise');
 const server = require('http').createServer(app);
 const Shopify = require('shopify-api-node');
+const solc = require("solc"); 
+const Web3 = require('web3');
 
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
@@ -99,13 +102,14 @@ app.get('/shopify/callback', (req, res) => {
             const shopRequestHeaders = {
                 'X-Shopify-Access-Token': accessToken,
             };
-
-            createInstance(accessToken, shop); //access resources from shop by creating a new instance
-            setInterval(checkEvents, 3000); //check for new events every 3 seconds
         })
         .catch((error) => {
             res.status(error.statusCode).send(error.error.error_description);
         });
+
+        //createInstance(accessToken, shop); //access resources from shop by creating a new instance
+        createCompany(shop); //creates new company using CompanyFactory contract
+        //setInterval(checkEvents, 3000); //check for new events every 3 seconds
     }
 
     else {
@@ -132,4 +136,25 @@ function createInstance(access_token, shop_name) {
         shopName: shop_name,
         accessToken: access_token
     }); 
+}
+
+function createCompany(shop_name) {
+    /*const contractAddress = "0x8bF785d9c9a0490778f9480582037832362a3737"; //contract address for CompanyFactory
+    const contractInput = fs.readFileSync("../contracts/CompanyFactory.sol"); //contract file
+    console.log("The contract input is: " + contractInput);
+    const contractOutput = solc.compile(contractInput.toString(), 1); //use solc to compile the file
+    console.log("The contract output is: " + contractOutput);
+
+    const abi = JSON.parse(contractOutput.contracts[":CompanyFactory"].interface); //interface from contract to be used with web3 object
+
+    var myContract = Web3.eth.contract(abi, contractAddress);
+
+    console.log(myContract);
+
+    myContract.methods.createNewCompany(shop_name).call(function(err, result) {
+        if(err)
+            console.log(err);
+        else
+            console.log("The end result was: " + result);
+    }); */
 }

@@ -16,6 +16,10 @@ export class ShopifyService {
       console.log("Socket connected");
     });
 
+    sock.on('error', function() {
+        
+    });
+
     sock.on('message', function(msg) {
       console.log(msg);
     });
