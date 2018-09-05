@@ -13,11 +13,15 @@ export class ShopifyService {
   public listen() {
     const sock = this.socket('http://localhost:3000');
     sock.on('connection', function() {
-      console.log("Socket connected");
+      console.log("Socket connected to plugin");
     });
 
-    sock.on('error', function() {
-        
+    sock.on('connect_error', function() {
+        console.log("Cannot connect to plugin");
+    });
+
+    sock.on('reconnect_error', function() {
+        console.log("Cannot connect to plugin");
     });
 
     sock.on('message', function(msg) {
@@ -25,7 +29,7 @@ export class ShopifyService {
     });
 
     sock.on('disconnect', function() {
-      console.log("Socket disconnected");
+      console.log("Socket disconnected from plugin");
     });
   }
 }
