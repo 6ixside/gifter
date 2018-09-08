@@ -151,6 +151,34 @@ export class AccountService {
   	return new EthereumTx(trx);
   }
 
+  //adress a is the consumer, b is the retailer
+  public getValidationArgs(a, b, nonce){
+  	let aObj = {t: 'address', v:a};
+  	let bObj = {t: 'address', v:b};
+  	let nonceObj = {t: 'uint', v:nonce}
+  	let hash = this.web3.utils.soliditySha3(aObj, bObj, nonceObj);
+
+  	console.log('keccak');
+  	console.log(hash);
+
+  	return new Promise((resolve, reject) => {
+  		this.keyringController.signMessage({from: this.accounts[0], data: hash}).then((data) => {
+	  		console.log(data);
+
+	  		var r = data.substr(0, 66);
+	  		var s = '0x' + data.substr(66,64);
+	  		var v = '0x' + data.substr(130, 2);
+
+	  		console.log('recovering address');
+	  		this.web3.eth.personal.ecRecover(hash, data).then((address) => {
+	  			console.log(address);
+	  		});
+
+	  		resolve([v, r, s]);
+	  	}, (err) => {reject('error signing message: ' + err)});
+  	});
+  }
+
   public signTransaction(trx){
   	console.log('signing with: ' + this.accounts[0]);
   	return this.keyringController.signTransaction(trx, this.accounts[0]);

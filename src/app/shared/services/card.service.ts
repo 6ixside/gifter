@@ -100,43 +100,50 @@ export class CardService {
     }
   }
 
-  public async createCard(company, value){
-  	let method = this.contracts['card_util']['contract'].methods.purchaseCard('0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681', 0);
-  	let trx_encode = method.encodeABI();
-  	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
+  public async createCard(company, companyAddress = '0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681', cardPosition = 0){
+    console.log('getting next cards');
+    this.as.getValidationArgs(this.as.accounts[0], '0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681', 0).then(async (signs) => {
+      console.log('validation hash');
+      console.log(signs);
 
-  	let trx = this.as.createTransactionObject({
-  		nonce: this.web3.utils.toHex(nonce),
-  		from: this.as.accounts[0],
-  		to: '0x33E46a87A2Eabdc7de66B494848f91f4D45be35E',
-  		gas: this.web3.utils.toHex(5000000),
-  		gasPrice: this.web3.utils.toHex(1000000000),
-  		data: trx_encode
-  	});
+      //passes v r s as third fourth and fifth params
+    	let method = this.contracts['card_util']['contract'].methods.purchaseCard(companyAddress, cardPosition, [signs[0]], [signs[1]], [signs[2]]);
+    	let trx_encode = method.encodeABI();
+    	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
 
-  	this.as.signTransaction(trx).then((data) => {
-  		console.log('data');
-  		console.log(data);
+    	let trx = this.as.createTransactionObject({
+    		nonce: this.web3.utils.toHex(nonce),
+    		from: this.as.accounts[0],
+    		to: '0x33E46a87A2Eabdc7de66B494848f91f4D45be35E',
+    		gas: this.web3.utils.toHex(5000000),
+    		gasPrice: this.web3.utils.toHex(1000000000),
+    		data: trx_encode
+    	});
 
-  		var rawTrx = EthereumUtil.bufferToHex(data.serialize());
-  		console.log(rawTrx);
+    	this.as.signTransaction(trx).then((data) => {
+    		console.log('data');
+    		console.log(data);
 
-			this.web3.eth.sendSignedTransaction(rawTrx, (err, res) => {
-				if(err)
-					console.log(err);
+    		var rawTrx = EthereumUtil.bufferToHex(data.serialize());
+    		console.log(rawTrx);
 
-				console.log(res);
-			}).on('transactionHash', function(hash){
-				    console.log('hash: ' + hash);
-				})
-				.on('receipt', function(receipt){
-				    console.log('receipt: ' + receipt);
-				})
-				.on('confirmation', function(confirmationNumber, receipt){
-					console.log('confirmation number: ' + confirmationNumber);
-				})
-				.on('error', console.error);
-	  });
+  			this.web3.eth.sendSignedTransaction(rawTrx, (err, res) => {
+  				if(err)
+  					console.log(err);
+
+  				console.log(res);
+  			}).on('transactionHash', function(hash){
+  				    console.log('hash: ' + hash);
+  				})
+  				.on('receipt', function(receipt){
+  				    console.log('receipt: ' + receipt);
+  				})
+  				.on('confirmation', function(confirmationNumber, receipt){
+  					console.log('confirmation number: ' + confirmationNumber);
+  				})
+  				.on('error', console.error);
+  	  });
+    });
   }
 
   public resetIndex(){

@@ -18,7 +18,7 @@ export class TabNavComponent implements OnInit {
   }
 
   createCard(){
-  	this.cs.createCard('newCard123', 50);
+  	this.cs.createCard('newCard123');
   }
 
 }
