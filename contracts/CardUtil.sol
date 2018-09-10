@@ -9,31 +9,30 @@ contract CardUtil {
 	CompanyFactory cf;
 
 	mapping (address => uint256[]) public inventories;
-	mapping (address => mapping(address => uint256)) nonceSet;
+	mapping (address => mapping (address => uint256)) public nonceSet;
 	
 	bytes prefix = "\x19Ethereum Signed Message:\n32";
 	
 	//address a will be consumer, address b will be retailer
 	//returns true or reverts
 	function validateTransaction(address a, address b, uint8[] v, bytes32[] r, bytes32[] s) internal returns(bool){
-	    uint256 nonce = getNonce(a, b);
-	    bytes32 check = keccak256(prefix, keccak256(a, b, nonce));
-	    
-	    require(ecrecover(check, v[0], r[0], s[0]) == a);
+    uint256 nonce = getNonce(a, b);
+    bytes32 check = keccak256(prefix, keccak256(a, b, nonce));
+    
+    require(ecrecover(check, v[0], r[0], s[0]) == a, 'address check invalid');
 
-	    //commenting for now while shopify end is in dev
-	    //require(ecrecover(check, v[1], r[1], s[1]) == b);
-	    
-	    return true;
+    //commenting for now while shopify end is in dev
+    //require(ecrecover(check, v[1], r[1], s[1]) == b);
+    
+    return true;
 	}
 
-	function purchaseCard(address companyAddress, uint16 cardPosition, uint8[] v, bytes32[] r, bytes32[] s) public{
-		require(validateTransaction(msg.sender, companyAddress, v, r, s));
-		/*Company c = cf.owners[companyAddress];
-		Card memory card = c.cards[cardPosition];*/
+	function purchaseCard(address consumer, address companyAddress, uint16 cardPosition, uint8[] v, bytes32[] r, bytes32[] s) public{
+		require(validateTransaction(consumer, companyAddress, v, r, s));
+
 		uint256 dna = cf.getOwner(companyAddress).getCardDnas()[cardPosition];
 
-		inventories[msg.sender].push(dna);
+		inventories[consumer].push(dna);
 	}
 	
 	function tradeCard(address from, address to, uint16[] fromTrades, uint16[] toTrades) public {
@@ -60,18 +59,15 @@ contract CardUtil {
   }
   
   function getNonce(address a, address b) public view returns (uint256){
-      require(a != address(0) && b != address(0) && a != b);
-      
-      if(a < b){
-          return nonceSet[a][b];
-      }
-      
-      return nonceSet[b][a];
-  }
-  
-  //tested and completed correctly
-  function test(address a, address b, uint nonce) public returns(bytes32){
-      return keccak256(a,b,nonce);
+    require(a != address(0), 'consumer null');
+    require(b != address(0), 'retailer null');
+    require(a != b, 'same address');
+    
+    if(a < b){
+        return nonceSet[a][b];
+    }
+    
+    return nonceSet[b][a];
   }
 
   constructor(address a) public{

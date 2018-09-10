@@ -65,8 +65,8 @@ contract Company is Ownable{
 		//create a giftcard as a 256 bit binary object
     uint256 dna = uint256(owner);  
     dna |= uint256(value)<<160;
-    dna |= uint256(tradeable)<<172;
-    dna |= uint256(id)<<180;
+    dna |= uint256(tradeable)<<176;
+    dna |= uint256(id)<<184;
 
     cards.push(Card(imageHash, dna));
 	}

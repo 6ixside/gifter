@@ -29,12 +29,12 @@ export class CardService {
 
     'company_factory': {
       'path': 'assets/CompanyFactory.abi',
-      'address': '0x8bF785d9c9a0490778f9480582037832362a3737'
+      'address': '0x1682DE4D8BcD8BdC5fa86e8b4Ee1263d81212CFa'
     },
 
     'card_util': {
       'path': 'assets/CardUtil.abi',
-      'address': '0x33E46a87A2Eabdc7de66B494848f91f4D45be35E'
+      'address': '0x28Cb86612875cA99A12ae01924F6311d5b077CD4'
     }
 
   };
@@ -102,19 +102,27 @@ export class CardService {
 
   public async createCard(company, companyAddress = '0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681', cardPosition = 0){
     console.log('getting next cards');
-    this.as.getValidationArgs(this.as.accounts[0], '0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681', 0).then(async (signs) => {
+    console.log(this.as.accounts[0]);
+
+    this.as.getValidationArgs(this.as.accounts[0], companyAddress, 0).then(async (signs) => {
       console.log('validation hash');
       console.log(signs);
 
       //passes v r s as third fourth and fifth params
-    	let method = this.contracts['card_util']['contract'].methods.purchaseCard(companyAddress, cardPosition, [signs[0]], [signs[1]], [signs[2]]);
+    	//let method = this.contracts['card_util']['contract'].methods.purchaseCard(this.as.accounts[0], companyAddress, cardPosition, [signs[0]], [signs[1]], [signs[2]]);
+      let method = this.contracts['card_util']['contract'].methods.purchaseCard(this.as.accounts[0], companyAddress, cardPosition, [signs[0]], [signs[1]], [signs[2]]);
     	let trx_encode = method.encodeABI();
     	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
+
+      /*console.log('ec test');
+      method.call().then((data) => {
+        console.log(data);
+      });*/
 
     	let trx = this.as.createTransactionObject({
     		nonce: this.web3.utils.toHex(nonce),
     		from: this.as.accounts[0],
-    		to: '0x33E46a87A2Eabdc7de66B494848f91f4D45be35E',
+    		to: '0x28Cb86612875cA99A12ae01924F6311d5b077CD4',
     		gas: this.web3.utils.toHex(5000000),
     		gasPrice: this.web3.utils.toHex(1000000000),
     		data: trx_encode

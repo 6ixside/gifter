@@ -14,7 +14,7 @@ var pk = new Buffer('c32daf23b2a37cc7d0238311434ecb64454d74c365a2ec9b70fa9dbfebc
 //create a new Web3 object
 var web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/"));
 
-var contract = new web3.eth.Contract(abi, '0x5b85e3266a851C25C478e699D7C6E3d853ccaDe7');
+var contract = new web3.eth.Contract(abi, '0x44079C653A7133080abaE0A901B7126502B7ae62');
 
 var acc = web3.eth.accounts.privateKeyToAccount('0xc32daf23b2a37cc7d0238311434ecb64454d74c365a2ec9b70fa9dbfebcca536');
 
@@ -30,7 +30,7 @@ web3.eth.getTransactionCount(acc.address).then(data => {
   	var trx = new EthereumTx({
 		nonce: web3.utils.toHex(data),
 		from: '0xBcBf7351C4D8ec9A712600d95Cb6320B669DF681',
-		to: '0x5b85e3266a851C25C478e699D7C6E3d853ccaDe7',
+		to: '0x44079C653A7133080abaE0A901B7126502B7ae62',
 		gas: web3.utils.toHex(5000000),
 		gasPrice: web3.utils.toHex(1000000000),
 	data: trx_encode
