@@ -11,17 +11,13 @@ export class ShopifyService {
   constructor() { }
 
   public listen() {
-    const sock = this.socket('http://localhost:3000');
+    /*const sock = this.socket('http://localhost:4200');
+
+    console.log('opening socket');
+    sock.open();
+
     sock.on('connection', function() {
       console.log("Socket connected");
-    });
-
-    sock.on('message', function(msg) {
-      console.log(msg);
-    });
-
-    sock.on('disconnect', function() {
-      console.log("Socket disconnected");
-    });
+    });*/
   }
 }

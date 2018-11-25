@@ -18,6 +18,7 @@ import { FriendBarComponent } from './friend-bar/friend-bar.component';
 import { CreateAccountModalComponent } from './pages/create-account-modal/create-account-modal.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { ViewMnemonicComponent } from './pages/view-mnemonic/view-mnemonic.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 //services
@@ -38,7 +39,8 @@ import { IpfsService } from './shared/services/ipfs.service';
     InventoryComponent,
     ViewMnemonicComponent,
     ConfirmationModalComponent,
-    ShopifyPluginComponent
+    ShopifyPluginComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

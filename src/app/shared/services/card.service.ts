@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { AccountService } from './account.service';
 import Web3 from 'web3';
@@ -21,6 +22,7 @@ export class CardService {
 	public cf_contract: any;
 
   //TODO: move contracts to a config file
+  //TODO: make a contract loading service
   private contracts: Object = {
     'card_factory': {
       'path': 'assets/card_factory.abi',
@@ -48,6 +50,7 @@ export class CardService {
 
   //other
   public loading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public loadingObserver: Observable<boolean> = this.loading.asObservable();
 
   constructor(public http: HttpClient, public as: AccountService){
     this.index = 0;
@@ -55,10 +58,26 @@ export class CardService {
     this.loadAmount = 5;
     this.rowSet = [];
 
-    let cf_abi_url;
+    let abi_url;
 
     try{
-  	  cf_abi_url = this.extension.runtime.getURL('/assets/card_factory.abi');
+      console.log("extension mode, loading contracts");
+      this.loading.next(true);
+  	  //cf_abi_url = this.extension.runtime.getURL('/assets/card_factory.abi');
+
+      for(var con in this.contracts){
+        abi_url = this.extension.runtime.getURL('/' + this.contracts[con]['path']);
+
+        fetch(abi_url).then((res) =>{
+          this.http.get(res.url, {
+            withCredentials: true
+          }).subscribe((res) =>{
+            this.contracts[con]['contract'] = new this.web3.eth.Contract(res, this.contracts[con].address);
+            this.loading.next(false);
+          });
+        });
+      }
+
     } catch(e){
       this.loading.next(true);
 
@@ -70,33 +89,6 @@ export class CardService {
           this.loading.next(false);
         })
       }
-
-      /*this.loading.next(true);
-      this.http.get('http://localhost:4200/assets/card_factory.abi', {
-        withCredentials: true
-      }).subscribe((res) => {
-        console.log(res);
-        this.cf_abi = res;
-        this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB');
-        this.loading.next(false);
-      });*/
-    }
-
-    if(cf_abi_url){
-      this.loading.next(true);
-    	fetch(cf_abi_url).then((res) => {
-    		this.http.get(res.url, {
-    			withCredentials: true
-    		}).subscribe((res) => {
-    			this.cf_abi = res;
-    			console.log(this.cf_abi);
-
-    			this.cf_contract = new this.web3.eth.Contract(this.cf_abi, '0x5f65Fc6112f2A86614C9710d2f2B5106c6A2bFBB');
-    			console.log(this.cf_contract);
-
-          this.loading.next(false);
-    		});
-    	});
     }
   }
 
@@ -168,7 +160,12 @@ export class CardService {
     //let method = this.cf_contract.methods.inventories(this.as.accounts[0], 0);
     let trx_encode = method.encodeABI();
 
-    var _rowset = []
+    var _rowset = [];
+    var _dataSet = [];
+
+    //temporary this is essentially likecalling resetindex
+    //self.rowSet = [];
+    self.index = 0;
 
     method.call().then((data) => {
       var cards = data;
@@ -186,11 +183,11 @@ export class CardService {
         })
       }
 
-      console.log(cs);
-
       if(cs && cs.length > 0){
         _rowset = self.rowSet.concat(cs);
-        self.cardSet.next(_rowset);
+        self.rowSet = _rowset;
+
+        self.cardSet.next(self.rowSet);
       }
     }, (err)=> {
       console.log("inv error");
@@ -199,6 +196,10 @@ export class CardService {
   }
 
   public next(): IteratorResult<Object>{
+    console.log(this.index);
+    console.log(this.rowSet.length);
+    console.log(this.rowSet);
+
     if(this.index < this.rowSet.length){
       return{
         done: false,

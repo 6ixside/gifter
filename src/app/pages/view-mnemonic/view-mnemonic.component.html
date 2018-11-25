@@ -16,17 +16,17 @@
 
 	    	<br/>
 
-	    	<p class="mnemonic_description_2">
+	    	<!--<p class="mnemonic_description_2">
 				For security reasons, you’ll be required to re-enter the words on the next page.
-			</p>
+			</p>-->
 	    </div>
 	</div>
 
 	<div class="mnemonic_view_container">
 		<mat-grid-list cols="3" rowHeight="2:1">
-			<mat-grid-tile *ngFor="let word of mnemonic.keys()">
-				<span class="word_container" matBadge="{{word + 1}}" matBadgePosition="before" matBadgeColor="primary">
-					<p class="mnemonic_word">{{mnemonic[word]}}</p>
+			<mat-grid-tile *ngFor="let word of this.mnemonic; let i = index">
+				<span class="word_container" matBadge="{{i + 1}}" matBadgePosition="before" matBadgeColor="primary">
+					<p class="mnemonic_word">{{word}}</p>
 				</span>
 			</mat-grid-tile>
 		</mat-grid-list>

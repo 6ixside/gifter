@@ -8,7 +8,7 @@ contract CompanyFactory {
 	mapping(address => Company) public owners;
 	mapping(address => bool) public exists;
 
-	function getOwner(address a) public view returns(Company){
+	function getCompany(address a) public view returns(Company){
 		return owners[a];
 	}
 
@@ -43,10 +43,16 @@ contract Company is Ownable{
 		return owner;
 	}
 
+	function getCompanyName() public view returns(bytes32){
+		return companyName;
+	}
+
 	function getContractAddress() public view returns(address){
 		return this;
 	}
 
+	//assume the set of cards that a single company will make is relativley small,
+	//so no need to implement an iterator for this fn
 	function getCardDnas() public view returns(uint256[]){
 		uint256[] memory r = new uint256[](cards.length);
 

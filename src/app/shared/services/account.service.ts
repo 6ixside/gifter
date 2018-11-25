@@ -22,16 +22,42 @@ export class AccountService {
 	public keyring: any;
 	public accounts: Object;//BehaviorSubject<Object> = new BehaviorSubject<Object>({});
 	public keyringState: any;
-	public key: String;
+	public key: string;
+	public user: string;
+	public email: string;
 
 	//create an observable that is the state so we can listen to changes
 	public accountState: Object = {
-		USER: new BehaviorSubject<String>(null),
-		EMAIL: new BehaviorSubject<String>(null),
+		USER: new BehaviorSubject<string>(null),
+		EMAIL: new BehaviorSubject<string>(null),
 		KEY: new BehaviorSubject<Object>(null)
 	};
 
   constructor(){
+  	console.log('listening');
+
+  	try{
+	  	chrome.runtime.onConnect.addListener(() =>{
+	  		console.log('connected!');
+	  	});
+
+	  	chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) =>{
+	  		console.log('external method');
+	  	});
+
+	  	chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
+	  		console.log('got a message!');
+
+	  		console.log(request);
+	  		console.log(sender);
+	  		console.log(sendResponse);
+
+	  		sendResponse({dismiss: 'bye'});
+	  	});
+	  } catch(e){
+	  	console.log('in browser mode, not adding inpage script');
+	  }
+
   	/*On Instantiation, load the last state of the extension
   	and then instantiate the keyring controller with the
   	resulting state*/
@@ -40,6 +66,9 @@ export class AccountService {
 				keyringTypes: [SimpleKeyring],
 				initState: data 
 			});
+
+			this.user = data['USER'];
+			this.email = data['EMAIL'];
 
 			this.keyringController.signTransaction.bind(this.keyringController);
 
@@ -196,7 +225,65 @@ export class AccountService {
 		});
 	}
 
-	/*public setData(data){
+	/*Might use this type of functionality to get friends*/
+	/*
+	public getFriends(){
+		var self = this;
+
+		let method = this.contracts['account_util']['contract'].methods.getFriends();
+
+		method.call().then((data) => {
+			//how do we want to return friend data? As an address? Or do we want to define
+			//a more structured friend object that gives more insight to a user.
+			//i.e. an anonymous user you can only view their address/ trades on marketplace
+			//but a friend you can also view their inventory and interests.
+		})
+	}
+
+	public async sendFriendRequest(address: String){
+		var self = this;
+
+		let method = this.contracts['account_util']['contract'].methods.addFriend(address);
+  	let trx_encode = method.encodeABI();
+  	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
+
+  	let trx = this.as.createTransactionObject({
+  		nonce: this.web3.utils.toHex(nonce),
+  		from: this.as.accounts[0],
+  		to: '0x28Cb86612875cA99A12ae01924F6311d5b077CD4', //need to change to address of account service
+  		gas: this.web3.utils.toHex(5000000),
+  		gasPrice: this.web3.utils.toHex(1000000000),
+  		data: trx_encode
+  	});
+
+  	this.signTransaction(trx).then((data) => {
+  		console.log('data');
+  		console.log(data);
+
+  		var rawTrx = EthereumUtil.bufferToHex(data.serialize());
+  		console.log(rawTrx);
+
+			this.web3.eth.sendSignedTransaction(rawTrx, (err, res) => {
+				if(err)
+					console.log(err);
+
+				console.log(res);
+			}).on('transactionHash', function(hash){
+				    console.log('hash: ' + hash);
+				})
+				.on('receipt', function(receipt){
+				    console.log('receipt: ' + receipt);
+				})
+				.on('confirmation', function(confirmationNumber, receipt){
+					console.log('confirmation number: ' + confirmationNumber);
+				})
+				.on('error', console.error);
+	  });
+	}
+	*/
+
+	/*
+	public setData(data){
 		this.store.putState(data);
 	}
 

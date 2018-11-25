@@ -14,5 +14,6 @@
 
     <span class="spacer"></span>
 
-	<button mat-icon-button><mat-icon>settings</mat-icon></button>
+	<button *ngIf="!config.settings" mat-icon-button (click)="goToSettings()"><mat-icon>settings</mat-icon></button>
+	<button *ngIf="config.settings" mat-icon-button (click)="goToMain()"><mat-icon>arrow_back</mat-icon></button>
 </mat-toolbar>

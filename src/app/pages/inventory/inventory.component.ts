@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CardService } from '../../shared/services/card.service';
 import { Router, ActivatedRoute, NavigationEnd, Params } from '@angular/router'; 
 import { IpfsService } from '../../shared/services/ipfs.service';
+
+import { take } from 'rxjs/operators'
 import BigNumber from 'big-number';
 
 @Component({
@@ -14,17 +16,29 @@ export class InventoryComponent implements OnInit {
 	public inventory: Array<Object>;
   public image;
 
+  public dataSet: Array<Object> = [];
+
   constructor(public cs: CardService, public is: IpfsService, public router: Router){
-  	this.inventory = [];
+    console.log("emptying inv");
+    this.inventory = [];
 
-  	this.cs.loading.subscribe(loading => {
-  		if(!loading)
+    console.log("creating subscription");
+    this.cs.loadingObserver.pipe(take(2)).subscribe(loading => {
+      console.log("getting next?");
+
+  		if(!loading){
   			this.cs.getNextCards();
+      }
   	});
 
-  	this.cs.cardSet.subscribe(data => {
-  		this.buildInventory(data);
-  	});
+    this.cs.cardSet.subscribe(data => {
+      console.log("**data**");
+      console.log(data);
+
+      //this.buildInventory(data);
+      this.getNext();
+    });
+
 
     this.is.isReady.subscribe(data => {
       if(data)
@@ -32,8 +46,13 @@ export class InventoryComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
- 
+  ngOnInit(){
+    //this.cs.getNextCards();
+  }
+
+  ngOnDestroy(){
+    console.log("emptying inv again");
+    this.inventory = [];
   }
 
   getFile(){
@@ -47,14 +66,25 @@ export class InventoryComponent implements OnInit {
   }
 
   getNext(){
-  	var self = this;
   	var results;
 
-  	while(results = this.cs.next(), !results.done){
-  		self.inventory = self.inventory.concat(results.value);
-  	}
+    console.log("here");
 
-  	this.cs.getNextCards();
+  	while(results = this.cs.next(), !results.done){
+      console.log(results);
+      this.dataSet = new Array<Object>(results)
+
+      this.inventory.push(this.dataSet);
+      //self.buildInventory([results.value]);
+      console.log(this.inventory);
+  	}
+  	//this.cs.getNextCards();
+  }
+
+  redeem(url = 'https://www.canadiantire.ca'){
+    chrome.tabs.create({
+      url: url
+    });
   }
 
   //build up to 4 at a time
@@ -64,6 +94,7 @@ export class InventoryComponent implements OnInit {
     var decVals = [];
 
     for(var i = 0; i < data.length; i++){
+      this.dataSet.push(data[i]);
       c_name = data[i].name.split('');
 
       while(c_name.length){
@@ -76,13 +107,23 @@ export class InventoryComponent implements OnInit {
         }
       }
 
+      console.log(decVals);
+
       c_name = '';
       while(decVals.length){
         c_name += String.fromCharCode(parseInt('0x' + decVals.pop().toString(16) + decVals.pop().toString(16)));
       }
 
-      data[i].name = c_name;
-      this.inventory.push(data[i]);
+      //this.dataSet[i]['name'] = c_name;
+      //this.inventory.push(this.dataSet[i]);
+      this.inventory.push({
+        name: c_name,
+        balance: this.dataSet[i]['balance'],
+        canTrade: this.dataSet[i]['canTrade'],
+        id: this.dataSet[i]['id']
+      });
+
+      console.log(this.inventory);
     }
   }
 

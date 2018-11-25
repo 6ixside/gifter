@@ -6,6 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CreateAccountComponent } from './pages/create-account/create-account.component';
 import { ViewMnemonicComponent } from './pages/view-mnemonic/view-mnemonic.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 const routes: Routes = [
 	{path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: 'create-account', component: CreateAccountComponent},
 	{path: 'home', component: HomeComponent},
   {path: 'mnemonic', component: ViewMnemonicComponent},
-  {path: 'inventory', component: InventoryComponent}
+  {path: 'inventory', component: InventoryComponent},
+  {path: 'settings', component: SettingsComponent}
 ];
 
 @NgModule({
