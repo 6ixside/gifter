@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import {
   MatAutocompleteModule,
+  MatBadgeModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
@@ -47,6 +48,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
   exports: [
     // CdkTableModule,
     MatAutocompleteModule,
+    MatBadgeModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,

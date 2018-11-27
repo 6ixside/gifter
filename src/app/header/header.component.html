@@ -1,0 +1,19 @@
+<mat-toolbar class="gifter_header">
+	<div class="user_info_container">
+		<div id="icon_container">
+			<img src="{{icon}}" />
+		</div>
+		<p class="username">{{user}}</p>
+	</div>
+
+	<span class="spacer"></span>
+
+	<div class="logo_container">
+		<img src="assets/logo.png" />
+    </div>
+
+    <span class="spacer"></span>
+
+	<button *ngIf="!config.settings" mat-icon-button (click)="goToSettings()"><mat-icon>settings</mat-icon></button>
+	<button *ngIf="config.settings" mat-icon-button (click)="goToMain()"><mat-icon>arrow_back</mat-icon></button>
+</mat-toolbar>

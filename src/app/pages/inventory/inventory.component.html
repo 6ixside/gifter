@@ -1,0 +1,28 @@
+<div class="inventory_container">
+	<mat-list>
+		<!-- <mat-list-item *ngFor="let card of inventory"> -->
+		<div *ngFor="let card of this.inventory" class="card_container">
+			<div class="card_image_container">
+				<img src="{{image}}" />
+			</div>
+
+			<div class="card_content">
+				<h3 class="card_name">Canadian Tire<!--{{card.name}}--></h3>
+				<h3 class="card_value">$25<!--{{card.balance}}--></h3>
+				<p class="card_description">here is a short descriptor about this card</p>
+			</div>
+
+			<div class="card_btns_container">
+				<button class="redeem_btn" (click)="redeem()" mat-flat-button>Redeem</button>
+				<button class="gift_btn" mat-flat-button>Gift</button>
+				<button class="trade_btn" mat-flat-button>Trade</button>
+			</div>
+		</div>
+
+			<!--<h3>CARD</h3>
+			<p>{{card}}</p>-->
+		<!-- </mat-list-item> -->
+
+		<!-- <button matButton (click)="this.router.navigate(['/mnemonic'])">mnemonic</button> -->
+	</mat-list>
+</div>

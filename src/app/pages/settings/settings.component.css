@@ -1,0 +1,27 @@
+@import './../../app.component.scss';
+
+#icon_container{
+	text-align: center;
+}
+
+#icon_container > img{
+  height: 150px;		
+  border-radius: 30px;
+  margin-top: 10px;
+}
+
+.info_container{
+	text-align: center;
+}
+
+.user_fields > p{
+	display: inline-block;
+}
+
+.email_fields > p{
+	display: inline-block;
+}
+
+.mnemonic_container{
+	text-align: center;
+}

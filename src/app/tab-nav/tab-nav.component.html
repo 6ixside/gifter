@@ -1,0 +1,25 @@
+<mat-tab-group mat-stretch-tabs>
+  <mat-tab style="width: 33%">
+    <ng-template mat-tab-label>
+     <mat-icon class="example-tab-icon">Inventory</mat-icon>
+   </ng-template>
+    <app-inventory></app-inventory>
+  </mat-tab>
+
+  <mat-tab style="width: 33%">
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">swap_horiz</mat-icon>
+    </ng-template>
+
+    <!--Trading/Marketplace goes here
+    <button mat-button primary (click)="createCard()">new</button>-->
+    <app-shopify-plugin></app-shopify-plugin>
+  </mat-tab>
+
+  <mat-tab disabled>
+    <ng-template mat-tab-label>
+      <button class="purchase_btn" (click)="createCard()" mat-raised-button color="primary">
+        <p>Purchase</p>
+      </button>
+    </ng-template>
+  </mat-tab>

@@ -1,0 +1,28 @@
+<div class="settings_container">
+	<gifter-header [config]="settingsConfig"></gifter-header>
+
+	<div id="icon_container">
+		<img src="{{icon}}" />
+
+		<!--<div class="name_container">
+			<p class="user_name">{{user}}</p>
+		</div>-->
+	</div>
+
+	<div class="info_container">
+		<div class="user_fields">
+			<p style="margin-right: 5px">User Name: </p>
+			<p>{{user}}</p>
+		</div>
+
+		<div class="email_fields">
+			<p style="margin-right: 5px">Email: </p>
+			<p>{{email}}</p>
+		</div>
+	</div>
+
+	<div class="mnemonic_container">
+		<button mat-raised-button color="primary" (click)="this.router.navigate(['/mnemonic'])">View My Mnemonic!</button>
+	</div>
+
+</div>

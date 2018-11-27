@@ -1,0 +1,10 @@
+.home_container {
+  width: 100%;
+}
+
+gifter-friend-bar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+}

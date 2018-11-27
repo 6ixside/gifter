@@ -1,0 +1,69 @@
+@import './../../app.component.scss';
+
+.login_header{
+    background-color: $sub;
+    width: 100%;
+    height: 96px;
+}
+
+.logo_container > img{
+    display: block;
+    margin: auto;
+    padding-top: 25px;
+    height: 48px;
+    width: 80px;
+}
+
+.mnemonic_description{
+    color: $main_font_color;
+    font-family: $main_font;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    line-height: 32px;
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 0px;
+}
+
+.mnemonic_description_2{
+	color: #8A94A6;
+    font-family: $main_font;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    display: inline-block;
+}
+
+.mnemonic_view_container{
+	text-align: center;
+}
+
+.word_container{
+	width: 72px;
+	height: 36px;
+	background-color: $sub;
+}
+
+.mnemonic_word{
+	color: $main_font_color;
+    font-family: $main_font;
+    font-size: 11px;
+	font-weight: 600;
+	line-height: 16px;
+	text-align: center;
+}
+
+#continue_btn{
+    border: 1px solid #e1e4e8;
+    border-radius: 15px; 
+    width: 215px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+#continue_btn{
+    background-color: $main;
+    color: #ffffff;
+}

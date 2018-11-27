@@ -1,3 +1,4 @@
+import { ShopifyPluginComponent } from './shopify-plugin/shopify-plugin.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -8,22 +9,53 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MaterialSharedModule } from './material-shared/material-shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './pages/login/login.component';
+import { CreateAccountComponent } from './pages/create-account/create-account.component';
+import { HomeComponent } from './pages/home/home.component';
+import { HeaderComponent } from './header/header.component';
+import { TabNavComponent } from './tab-nav/tab-nav.component';
+import { FriendBarComponent } from './friend-bar/friend-bar.component';
+import { CreateAccountModalComponent } from './pages/create-account-modal/create-account-modal.component';
+import { InventoryComponent } from './pages/inventory/inventory.component';
+import { ViewMnemonicComponent } from './pages/view-mnemonic/view-mnemonic.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+
+//services
+import { AccountService } from './shared/services/account.service';
+import { CardService } from './shared/services/card.service';
+import { IpfsService } from './shared/services/ipfs.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    HeaderComponent,
+    TabNavComponent,
+    FriendBarComponent,
+    CreateAccountComponent,
+    CreateAccountModalComponent,
+    InventoryComponent,
+    ViewMnemonicComponent,
+    ConfirmationModalComponent,
+    ShopifyPluginComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([]),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialSharedModule,
     BrowserAnimationsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AccountService,
+              CardService,
+              IpfsService],
+  bootstrap: [AppComponent],
+  entryComponents: [CreateAccountModalComponent,
+                    ConfirmationModalComponent]
 })
 export class AppModule { }
