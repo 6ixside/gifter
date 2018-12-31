@@ -125,7 +125,7 @@ export class AccountService {
   }
 
   /*Loads the last state from local storage, if local storage doesn't exist, assume undefined last state*/
-  public loadLastState(){
+  private loadLastState(){
   	//chrome's local storage object for extensions
   	let localStorage = this.extension.storage ? this.extension.storage.local : window.localStorage;
 
@@ -151,7 +151,7 @@ export class AccountService {
   }
 
   //sets information pertaining to the user's account
-  public setState(state){
+  private setState(state){
   	let localStorage = this.extension.storage ? this.extension.storage.local : window.localStorage;
 
     return new Promise((resolve, reject) => {

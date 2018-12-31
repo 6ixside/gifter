@@ -15,6 +15,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { TabNavComponent } from './tab-nav/tab-nav.component';
 import { FriendBarComponent } from './friend-bar/friend-bar.component';
+import { FriendSheet } from './friend-bar/friend-bar.component';
 import { CreateAccountModalComponent } from './pages/create-account-modal/create-account-modal.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { ViewMnemonicComponent } from './pages/view-mnemonic/view-mnemonic.component';
@@ -25,6 +26,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
 import { AccountService } from './shared/services/account.service';
 import { CardService } from './shared/services/card.service';
 import { IpfsService } from './shared/services/ipfs.service';
+import { FriendService } from './shared/services/friend.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { IpfsService } from './shared/services/ipfs.service';
     HeaderComponent,
     TabNavComponent,
     FriendBarComponent,
+    FriendSheet,
     CreateAccountComponent,
     CreateAccountModalComponent,
     InventoryComponent,
@@ -53,9 +56,11 @@ import { IpfsService } from './shared/services/ipfs.service';
   ],
   providers: [AccountService,
               CardService,
-              IpfsService],
+              IpfsService,
+              FriendService],
   bootstrap: [AppComponent],
   entryComponents: [CreateAccountModalComponent,
-                    ConfirmationModalComponent]
+                    ConfirmationModalComponent,
+                    FriendSheet]
 })
 export class AppModule { }

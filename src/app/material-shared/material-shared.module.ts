@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
+  MatBottomSheetModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatCardModule,
@@ -49,6 +50,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     // CdkTableModule,
     MatAutocompleteModule,
     MatBadgeModule,
+    MatBottomSheetModule,
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,

@@ -154,9 +154,9 @@ export class CardService {
   public getNextCards(){
     var self = this;
     var offset = this.lastLoadIndex;
-    var quantity = this.loadAmount;
+    //var quantity = this.loadAmount; //probably won't do quantity, only load 4 at a time
 
-    let method = this.contracts['card_util']['contract'].methods.getInventory(this.as.accounts[0]);
+    let method = this.contracts['card_util']['contract'].methods.getInventory(this.as.accounts[0]); //, offset);
     //let method = this.cf_contract.methods.inventories(this.as.accounts[0], 0);
     let trx_encode = method.encodeABI();
 
@@ -189,6 +189,8 @@ export class CardService {
 
         self.cardSet.next(self.rowSet);
       }
+
+      offset += 4;
     }, (err)=> {
       console.log("inv error");
       console.log(err);

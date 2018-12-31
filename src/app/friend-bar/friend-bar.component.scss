@@ -1,0 +1,77 @@
+@import './../app.component.scss';
+
+.friend-form {
+  flex: 1 1 auto;
+}
+
+.friend_container{
+	background-color: $main;
+}
+
+.friend_expander{
+	background-color: $main;
+}
+
+.friend_content{
+	height: 10em;
+}
+
+.friend_item{
+	background-color: $sub;
+	margin-bottom: 0.5em;
+}
+
+.friend_item_text{
+	display: inline-block;
+	width: 50%;
+	float: left;
+}
+
+.friend_icon_container{
+	display: inline-block;
+	width: 50%;
+}
+
+.friend_icon_container > img{
+	width: 50px;  
+	float: right;
+	margin: 5px;
+	border-radius: 15px;
+}
+
+/deep/ .mat-expansion-panel-content{
+    background-color: $light;
+    padding: 0.5em;
+    width: 100%;
+}
+
+/deep/ .mat-expansion-panel-body{
+	overflow: auto;
+	padding: 0 0.5em !important;
+    width: 95%;
+    margin-left: -0.5em;
+}
+
+/deep/ .mat-expansion-panel-body::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.9);
+	border-radius: 10px;
+	background-color: #CCCCCC;
+}
+
+/deep/ .mat-expansion-panel-body::-webkit-scrollbar{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+/deep/ .mat-expansion-panel-body::-webkit-scrollbar-thumb{
+	background-color: $dark;
+	border-radius: 10px;
+	background-image: -webkit-linear-gradient(45deg,
+	                                          rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent);
+}

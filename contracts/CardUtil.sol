@@ -48,7 +48,7 @@ contract CardUtil {
 		require(from != address(0));
 		require(to != from);
 
-		//ensures every card in the trade agreement is tradeable
+		//ensures every card in the trade agreement is tradeable from the consumer perspective
 		for(uint i = 0; i < toTrades.length; i++){ require(uint8(toCards[i]>>176) == 1, 'Cannot trade card'); }
 		for(uint i = 0; i < fromTrades.length; i++){ require(uint8(fromCards[i]>>176) == 1, 'Cannot trade card'); } 
 
@@ -67,7 +67,7 @@ contract CardUtil {
 		/*trade card logic*/
 	}
 
-	function getInventory(address _owner) public view returns(bytes32[], uint256[], uint256[], uint256[], uint256[]){
+	function getInventory(address _owner, uint16 offset) public view returns(bytes32[], uint256[], uint256[], uint256[], uint256[]){
     uint256[] memory rowsub = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4); //get 4 cards at a time unless there are less than 4 cards to get
     bytes32[] memory companies = new bytes32[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
     uint256[] memory balances = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
@@ -75,7 +75,7 @@ contract CardUtil {
     uint256[] memory ids = new uint256[](inventories[_owner].length < 4 ? inventories[_owner].length : 4);
 
     for(uint i = 0; i < (inventories[_owner].length < 4 ? inventories[_owner].length : 4); i++){
-        rowsub[i] = inventories[_owner][i];
+        rowsub[i] = inventories[_owner][offset + i];
 
         //first 160 bits is the company address, so we want to get the name of that company (i.e. canadian tire)
         companies[i] = cf.getCompany(uint256(uint160(rowsub[i]))).getCompanyName();

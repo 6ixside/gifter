@@ -1,9 +1,26 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button><mat-icon>add</mat-icon></button>
-  <form class="friend-form">
-    <mat-form-field>
-      <input matInput>
-    </mat-form-field>
-  </form>
-  <button mat-icon-button><mat-icon>people</mat-icon></button>
-</mat-toolbar>
+	<mat-accordion class="friend_container">
+		<mat-expansion-panel class="friend_expander">
+    	<mat-expansion-panel-header>
+
+    		<mat-panel-title>
+	        <mat-icon>people</mat-icon>
+	      </mat-panel-title>
+	      <mat-panel-description style="margin: 0.3em 3em;">
+	        View Friends
+	      </mat-panel-description>
+			</mat-expansion-panel-header>
+
+			<div class="friend_content">
+				<div *ngFor="let friend of friends" class="friend_item">
+					<div class="friend_item_text">
+						<p style="margin: 0">address: {{friend.address}}</p>
+						<p style="margin: 0">nickname: {{friend.nickname}}</p>
+					</div>
+					<div class="friend_icon_container">
+						<img src="{{friend.icon}}" />
+					</div>
+				</div>
+			</div>
+
+		</mat-expansion-panel>
+	</mat-accordion>
