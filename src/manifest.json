@@ -7,6 +7,13 @@
  "default_icon": "assets/icon.png",
  "default_popup": "index.html"
  },
+ "content_scripts": [{
+ 		"all_frames": true,
+ 		"matches": ["file://*/*", "http://*/*", "https://*/*"],
+ 		"js": ["assets/gifter.js"],
+ 		"run_at": "document_start"
+ 	}
+ ],
  "permissions": [
  	"storage"
  ],
@@ -17,3 +24,4 @@
  	"assets/fonts/*.woff"
  ]
 }
+

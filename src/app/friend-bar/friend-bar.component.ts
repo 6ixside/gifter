@@ -18,7 +18,7 @@ export class FriendBarComponent implements OnInit {
 
 	  		for(let f of this.friends){
 	  			f['icon'] = blockies.createDataURL({
-			      seed: f['address'];
+			      seed: f['address']
 			    });
 	  		}
 

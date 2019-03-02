@@ -36,28 +36,6 @@ export class AccountService {
   constructor(){
   	console.log('listening');
 
-  	try{
-	  	chrome.runtime.onConnect.addListener(() =>{
-	  		console.log('connected!');
-	  	});
-
-	  	chrome.runtime.onMessageExternal.addListener((request, sender, sendResponse) =>{
-	  		console.log('external method');
-	  	});
-
-	  	chrome.runtime.onMessage.addListener((request, sender, sendResponse) =>{
-	  		console.log('got a message!');
-
-	  		console.log(request);
-	  		console.log(sender);
-	  		console.log(sendResponse);
-
-	  		sendResponse({dismiss: 'bye'});
-	  	});
-	  } catch(e){
-	  	console.log('in browser mode, not adding inpage script');
-	  }
-
   	/*On Instantiation, load the last state of the extension
   	and then instantiate the keyring controller with the
   	resulting state*/
@@ -131,22 +109,22 @@ export class AccountService {
 
   	return new Promise((resolve, reject) => {
   		if(!this.extension.storage){
-  			console.log('getting from local');
-				resolve(localStorage);
-			}
-			else{
-				//gets all the localstorage data
-				console.log('getting from extenion');
-		    localStorage.get(null, (result) => {
-		      if(this.extension.runtime.lastError){
-		      	console.log(this.extension.runtime.lastError);
-		        reject(this.extension.runtime.lastError);
-		      } 
-		      else
-		      	//result contains the vault object that holds the users's credentials
-		        resolve(result);
-		    });
-		  }
+			console.log('getting from local');
+			resolve(localStorage);
+		}
+		else{
+			//gets all the localstorage data
+			console.log('getting from extenion');
+	    localStorage.get(null, (result) => {
+	      if(this.extension.runtime.lastError){
+	      	console.log(this.extension.runtime.lastError);
+	        reject(this.extension.runtime.lastError);
+	      } 
+	      else
+	      	//result contains the vault object that holds the users's credentials
+	        resolve(result);
+	    });
+	  }
   	});
   }
 
@@ -160,9 +138,9 @@ export class AccountService {
     			localStorage.setItem(key, state[key]);
     		}
 
-				resolve();
-			}
-			else{
+			resolve();
+		}
+		else{
 	      localStorage.set(state, () => {
 	        if(this.extension.runtime.lastError){
 	        	console.log(this.extension.runtime.lastError);
