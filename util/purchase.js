@@ -18,6 +18,8 @@ var contract = new web3.eth.Contract(abi, '0x33E46a87A2Eabdc7de66B494848f91f4D45
 
 var acc = web3.eth.accounts.privateKeyToAccount('0xc32daf23b2a37cc7d0238311434ecb64454d74c365a2ec9b70fa9dbfebcca536');
 
+
+//BCBF7351C4D8EC9A712600D95CB6320B669DF681
 web3.eth.getTransactionCount(acc.address).then(data => {
 	let method = contract.methods.purchaseCard(
 		acc.address,

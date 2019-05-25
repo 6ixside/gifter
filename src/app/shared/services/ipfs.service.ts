@@ -20,9 +20,9 @@ export class IpfsService {
   }
 
   public getReadyStatus(){
-  	return new Promise((resolve) => {
+  	/*return new Promise((resolve) => {
   		setTimeout(resolve(), 200);
-  	})
+  	})*/
   }
 
   public async getFile(hash="QmNtW2eFMCTGR3CY7237BGobYpdpj7NGo8igMn7dy3C1Le"){

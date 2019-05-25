@@ -34,6 +34,7 @@ contract Company is Ownable{
 
 	struct Card {
 		bytes32 cardIconHash;
+		bool tradeable;
     uint256 dna;
   }
 
@@ -74,7 +75,7 @@ contract Company is Ownable{
     dna |= uint256(tradeable)<<176;
     dna |= uint256(id)<<184;
 
-    cards.push(Card(imageHash, dna));
+    cards.push(Card(imageHash, true, dna));
 	}
 
 	constructor(address a, bytes32 name) public{

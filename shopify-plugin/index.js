@@ -30,8 +30,6 @@ socket.on('connection', function(sock) {
     });
 });
 
-
-
 app.get('/shopify', (req, res) => {
     const shop = req.query.shop;
     if (shop) {

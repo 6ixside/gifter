@@ -34,7 +34,7 @@ export class AccountService {
 	};
 
   constructor(){
-  	console.log('listening');
+  	console.log('Setup 5/25/2019');
 
   	/*On Instantiation, load the last state of the extension
   	and then instantiate the keyring controller with the
@@ -138,7 +138,7 @@ export class AccountService {
     			localStorage.setItem(key, state[key]);
     		}
 
-			resolve();
+			resolve(); 
 		}
 		else{
 	      localStorage.set(state, () => {

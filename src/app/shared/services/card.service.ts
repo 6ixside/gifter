@@ -32,6 +32,7 @@ export class CardService {
     'company_factory': {
       'path': 'assets/CompanyFactory.abi',
       'address': '0x1682DE4D8BcD8BdC5fa86e8b4Ee1263d81212CFa'
+      
     },
 
     'card_util': {
@@ -71,7 +72,7 @@ export class CardService {
         fetch(abi_url).then((res) =>{
           this.http.get(res.url, {
             withCredentials: true
-          }).subscribe((res) =>{
+          }).subscribe((res: any) =>{
             this.contracts[con]['contract'] = new this.web3.eth.Contract(res, this.contracts[con].address);
             this.loading.next(false);
           });
@@ -106,10 +107,6 @@ export class CardService {
     	let trx_encode = method.encodeABI();
     	let nonce = await this.web3.eth.getTransactionCount(this.as.accounts[0]);
 
-      /*console.log('ec test');
-      method.call().then((data) => {
-        console.log(data);
-      });*/
 
     	let trx = this.as.createTransactionObject({
     		nonce: this.web3.utils.toHex(nonce),
